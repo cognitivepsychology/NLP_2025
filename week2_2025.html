@@ -2123,6 +2123,7 @@ load(&quot;my_app_id.rda&quot;) # 강의 담당자의 OAuth ID 불러오기.
 load(&quot;my_app_secret.rda&quot;) # 강의 담당자의 OAuth 비밀번호 불러오기.
 
 library(tuber) # 유튜브를 키워드로 검색하여 정보를 가져오는 패키지 불러오기.
+library(httpuv) # 설치되어 있지 않다면 오류가 날 가능성 있음.
 
 # 1. YouTube OAuth 2.0 인증하기.
 yt_oauth(app_id = my_app_id, app_secret = my_app_secret, token = my_apiKey)
