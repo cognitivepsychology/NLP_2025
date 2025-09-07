@@ -2145,6 +2145,21 @@ video_urls &lt;- str_c(&quot;https://www.youtube.com/watch?v=&quot;, video_ids)
 
 # 6. 결과 확인하기
 video_urls[1:10]</code></pre>
+<ul>
+<li>재인증 시 오류 해결책
+<ul>
+<li>조치
+<ul>
+<li>working directory에 저장된 숨김 파일인 <code>.httr-oauth</code>
+삭제하기.</li>
+<li>working directory에 저장된 유튜브 API key 파일도 삭제하는 것이
+좋음.</li>
+</ul></li>
+<li>이유: 해당 파일이 존재하면 이전 인증과정에서 생성된 캐시 파일을 계속
+사용하게 됨. 그럼 저장된 토큰이 만료되었을 때 인증 문제가 발생할 수
+있음(토큰은 상당히 짧은 기간만 유효함).</li>
+</ul></li>
+</ul>
 </div>
 <div id="b.-유튜브-댓글-추출하기" class="section level5">
 <h5>b. 유튜브 댓글 추출하기</h5>
