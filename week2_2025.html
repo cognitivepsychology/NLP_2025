@@ -1852,7 +1852,8 @@ h_dewey &lt;- h %&gt;%
   as_tibble() %&gt;% # 벡터를 티블로 변환하기.
   rename(text = value) %&gt;% # 열 제목 바꾸기.
   mutate(text = str_replace_all(text, &quot;\r&quot;, &quot;&quot;)) %&gt;% # 행 맨 끝의 &quot;\r&quot;(행의 처음으로 돌아갈 것을 지시하는 탈출문자) 제거하기.
-  filter(text != &quot;&quot;) # 공백 행 제거하기.</code></pre>
+  filter(text != &quot;&quot;) # 공백 행 제거하기.
+h_dewey</code></pre>
 </div>
 <div id="d.-html_elements-및-html_element" class="section level4">
 <h4>D. <code>html_elements</code> 및 <code>html_element</code></h4>
@@ -2270,8 +2271,215 @@ json_text.1</code></pre>
 ## # ℹ 6 more variables: device &lt;chr&gt;, keyboard &lt;chr&gt;, id.y &lt;chr&gt;, text &lt;chr&gt;,
 ## #   original_form &lt;chr&gt;, time &lt;chr&gt;</code></pre>
 </div>
+<div id="xml" class="section level3">
+<h3>5) XML</h3>
+<ul>
+<li>XML(Extensible Markup Language)의 정의
+<ul>
+<li>정의: XML은 사람과 기계가 모두 읽을 수 있는 형식으로 데이터를
+저장하고 전송하기 위해 설계된 언어.</li>
+<li>HTML과의 비교
+<ul>
+<li>유사점: 태그(tag) 사용.</li>
+<li>차이점: 미리 정의된 태그([EX]
+<body>
+)가 아닌, 사용자가 직접 정의하는 태그 사용([EX] <fileInfo>).</li>
+</ul></li>
+<li>장점: 데이터를 계층적, 구조적으로 표현하는 데 유용.</li>
+</ul></li>
+<li>XML 파일의 특성
+<ul>
+<li>요소(element): 개별 요소는 시작 태그와 끝 태그로 정의되며, 그 안에
+하위요소들을 포함. [EX] <code>&lt;SJML&gt; ... &lt;/SJML&gt;</code></li>
+<li>속성(attribute): 시작 태그 안에 <code>명칭=값</code>으로 기술되며,
+요소에 대한 추가적인 정보 제공. [EX] <code>author</code> 요소의
+속성으로는 <code>id</code>, <code>age</code>, <code>occupation</code>,
+<code>sex</code>, <code>submission</code>, <code>handwriting</code>이
+있음.</li>
+<li>내용(content): 시작 태크과 끝 태그 안에 들어 있는 구체적인
+정보.</li>
+</ul></li>
+<li>예시: 국립국어원 모두의 말뭉치에 공개된 비출판물 말뭉치의
+<code>WDRW1900100013.sjml</code> 파일의 소스 코드는 다음과 같음. 데이터
+값이 <code>&lt;SJML&gt;</code>라는 코드에 둘러싸인 것을 볼 수 있음.</li>
+</ul>
+<pre class="r"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;SJML&gt;
+    &lt;header&gt;
+        &lt;fileInfo&gt;
+            &lt;fileId&gt;WDRW1900100013&lt;/fileId&gt;
+            &lt;annoLevel&gt;원시&lt;/annoLevel&gt;
+            &lt;category&gt;비출판물 &gt; 수필&lt;/category&gt;
+        &lt;/fileInfo&gt;
+        &lt;sourceInfo&gt;
+            &lt;title&gt;아내의 생일상&lt;/title&gt;
+            &lt;author id=&quot;P00013&quot; age=&quot;45&quot; occupation=&quot;직장인/전문직&quot; sex=&quot;M&quot; submission=&quot;온라인&quot; handwriting=&quot;No&quot;&gt;김홍건&lt;/author&gt;
+        &lt;/sourceInfo&gt;
+    &lt;/header&gt;
+    &lt;text date=&quot;20200000&quot; subclass=&quot;null_생일상&quot;&gt;
+        &lt;p&gt;어제는 아내의 생일이었다. 생일을 맞이하여 아침을 준비하겠다고 오전 8시 30분부터 음식을 준비하였다.&lt;/p&gt;
+        &lt;p&gt;주된 메뉴는 스테이크와 낙지볶음, 미역국, 잡채, 소야 등이었다. 스테이크는 자주하는 음식이어서 자신이 준비하려고 했다. 앞뒤도 1분씩 3번 뒤집고 레스팅을 잘 하면 육즙이 가득한 스테이크가 준비되다. 아내도 그런 스테이크를 좋아한다.&lt;/p&gt;
+        &lt;p&gt;그런데 상상도 못한 일이 벌이지고 말았다. 보통 시즈닝이 되지 않은 원육을 사서 스테이크를 했는데, 이번에는 시즈닝이 된 부채살을 구입해서 했다. 그런데 케이스안에 방부제가 들어있는 것을 인지하지 못하고 방부제와 동시에 후라이팬에 올려놓을 것이다. 그것도 인지 못한체...&lt;/p&gt;
+        &lt;p&gt;앞면을 센불에 1분을 굽고 뒤집는 순간 방부제가 함께 구어진 것을 알았다. 아내의 생일이라 맛있게 구워보고 싶었는데&lt;/p&gt;
+        &lt;p&gt;어처구니 없는 상황이 발생한 것이다. 방부제가 센불에 녹아서 그런지 물처럼 흘러내렸다.  고민을 했다.&lt;/p&gt;
+        &lt;p&gt;방부제가 묻은 부문만 제거 하고 다시 구울까 했는데 방부제에 절대 먹지 말라는 문구가 있어서 아깝지만 버리는 방향을 했다. 너무나 안타까웠다. 아침 일찍 아내가 좋아하는 스테이크를 준비하고 그것을 맛있게 먹는 아내의 모습을 보고 싶었는데 전혀 생각지도 못한 상황이 발생해서...&lt;/p&gt;
+        &lt;p&gt;하지만 정신을 추스리고 바로 다른 메뉴로 변경했다. 소야, 소세지 야채볶음... 아내가 좋아하는지 모르겠지만 냉장고 안에 있는 후랑크소세지를 보니 바로 소야를 해야 겠다는 생각이 들었다.&lt;/p&gt;
+        &lt;p&gt;음식은 성공적으로 완성이 되었다. 40번째를 맞이하는 아내의 생일은 성공적으로 준비가 되었다. 맛있게 먹어 준 아내에게도 감사했다. 매년 아내의 생일에 맞이하면 아침마다 생일을 차려야 겠다.&lt;/p&gt;
+        &lt;p&gt;오늘도 즐거운 하루가 되었으면 좋겠다. 생일이니까~&lt;/p&gt;
+    &lt;/text&gt;
+&lt;/SJML&gt;</code></pre>
+<ul>
+<li><strong>xml2</strong> 패키지: XML 파일을 R로 불러들여
+분석해주는(parsing) 패키지.
+<ul>
+<li><code>read_xml</code>: XML 파일을 R로 불러들이는 함수.</li>
+<li><code>xml_find_all</code>: XPath(XML Path) 언어를 사용하여 매치되는
+노드의 모든 요소나 속성을 찾을 수 있게 해줌. XPath는 XML 문서의 특정
+부분을 지정해주는 언어를 가리킴.</li>
+<li><code>xml_find_first</code>: 매치되는 노드의 첫 번째 요소나 속성만
+찾을 수 있게 해줌.</li>
+<li><code>xml_attrs</code>: R로 읽어들인 XML 파일(노드들의 집합)의 특정
+요소([EX] <code>author</code> 요소)에 어떤 속성들(EX] <code>id</code>,
+<code>occupation</code>, <code>age</code>, <code>sex</code>)이 포함되어
+있고 그 속성들에 매칭되는 결과값([EX] P00013, 직장인/전문직, 45, M)은
+무엇인지 알려줌.</li>
+<li><code>xml_attr</code>: 특정 요소([EX] <code>author</code> 요소)에
+속한 특정 속성([EX] <code>occupation</code>)에 매칭되는 결과값([EX]
+직장인/전문직)은 무엇인지 알려줌.</li>
+</ul></li>
+<li>실습용 데이터
+<ul>
+<li>URL: <a href="https://kli.korean.go.kr/corpus/main/requestMain.do">국립국어원(모두의
+말뭉치) 비출판물 말뭉치</a></li>
+<li>데이터 습득 절차: 국립국어원 가입 후 활용신청(신청 후 승인까지
+시간이 다소 걸림).</li>
+<li>내용: 출판되지 않은 시(동시), 수필, 일기, 편지, 소설(동화), 감상문
+등.</li>
+</ul></li>
+</ul>
+<pre class="r"><code>library(xml2)
+
+# 기초적인 XML 노드를 read_xml() 함수로 읽어들이기.
+x &lt;- read_xml(&quot;&lt;body&gt;
+  &lt;p&gt;Some &lt;b&gt;text&lt;/b&gt;.&lt;/p&gt;
+  &lt;p&gt;Some &lt;b&gt;other&lt;/b&gt; &lt;b&gt;text&lt;/b&gt;.&lt;/p&gt;
+  &lt;p&gt;No bold here!&lt;/p&gt;
+&lt;/body&gt;&quot;)
+
+# xml_find_all() 함수와 xml_find_first() 함수의 차이 알아보기.
+para &lt;- xml_find_all(x, &quot;.//p&quot;) # &lt;p&gt;로 감싼 노드만 찾아내기.
+xml_find_all(para, &quot;.//b&quot;) # &lt;p&gt; 요소 아래의 모든 하위요소 &lt;b&gt;를 찾아줌.</code></pre>
+<pre><code>## {xml_nodeset (3)}
+## [1] &lt;b&gt;text&lt;/b&gt;
+## [2] &lt;b&gt;other&lt;/b&gt;
+## [3] &lt;b&gt;text&lt;/b&gt;</code></pre>
+<pre class="r"><code>xml_find_first(para, &quot;.//b&quot;) # &lt;p&gt; 요소 아래의 하위요소 &lt;b&gt; 중 첫 번째로 발견되는 것만 찾아줌. 세 번째 &lt;p&gt; 요소에서는 &lt;b&gt;가 없으므로 NA가 반환됨.</code></pre>
+<pre><code>## {xml_nodeset (3)}
+## [1] &lt;b&gt;text&lt;/b&gt;
+## [2] &lt;b&gt;other&lt;/b&gt;
+## [3] NA</code></pre>
+<pre class="r"><code>## 연습 1: 단일 XML 파일을 티블로 만들기. 
+
+# XML 파일을 R로 읽어들여 parsing하기.
+xml_sjml &lt;- read_xml(&quot;xml_week2/WDRW1900100013.sjml&quot;)
+
+# category 요소만 찾기.
+xml_sjml %&gt;%
+  xml_find_all(&quot;//category&quot;) %&gt;%
+  xml_text()</code></pre>
+<pre><code>## [1] &quot;비출판물 &gt; 수필&quot;</code></pre>
+<pre class="r"><code># text 요소만 찾기
+xml_sjml %&gt;%
+  xml_find_all(&quot;//text&quot;) %&gt;%
+  xml_text()</code></pre>
+<pre><code>## [1] &quot;어제는 아내의 생일이었다. 생일을 맞이하여 아침을 준비하겠다고 오전 8시 30분부터 음식을 준비하였다.주된 메뉴는 스테이크와 낙지볶음, 미역국, 잡채, 소야 등이었다. 스테이크는 자주하는 음식이어서 자신이 준비하려고 했다. 앞뒤도 1분씩 3번 뒤집고 레스팅을 잘 하면 육즙이 가득한 스테이크가 준비되다. 아내도 그런 스테이크를 좋아한다.그런데 상상도 못한 일이 벌이지고 말았다. 보통 시즈닝이 되지 않은 원육을 사서 스테이크를 했는데, 이번에는 시즈닝이 된 부채살을 구입해서 했다. 그런데 케이스안에 방부제가 들어있는 것을 인지하지 못하고 방부제와 동시에 후라이팬에 올려놓을 것이다. 그것도 인지 못한체...앞면을 센불에 1분을 굽고 뒤집는 순간 방부제가 함께 구어진 것을 알았다. 아내의 생일이라 맛있게 구워보고 싶었는데어처구니 없는 상황이 발생한 것이다. 방부제가 센불에 녹아서 그런지 물처럼 흘러내렸다.  고민을 했다.방부제가 묻은 부문만 제거 하고 다시 구울까 했는데 방부제에 절대 먹지 말라는 문구가 있어서 아깝지만 버리는 방향을 했다. 너무나 안타까웠다. 아침 일찍 아내가 좋아하는 스테이크를 준비하고 그것을 맛있게 먹는 아내의 모습을 보고 싶었는데 전혀 생각지도 못한 상황이 발생해서...하지만 정신을 추스리고 바로 다른 메뉴로 변경했다. 소야, 소세지 야채볶음... 아내가 좋아하는지 모르겠지만 냉장고 안에 있는 후랑크소세지를 보니 바로 소야를 해야 겠다는 생각이 들었다.음식은 성공적으로 완성이 되었다. 40번째를 맞이하는 아내의 생일은 성공적으로 준비가 되었다. 맛있게 먹어 준 아내에게도 감사했다. 매년 아내의 생일에 맞이하면 아침마다 생일을 차려야 겠다.오늘도 즐거운 하루가 되었으면 좋겠다. 생일이니까~&quot;</code></pre>
+<pre class="r"><code># author 요소의 모든 속성과 그에 매칭되는 값 찾기.
+xml_sjml %&gt;%
+  xml_find_all(&quot;//author&quot;) %&gt;%
+  xml_attrs()</code></pre>
+<pre><code>## [[1]]
+##              id             age      occupation             sex      submission 
+##        &quot;P00013&quot;            &quot;45&quot; &quot;직장인/전문직&quot;             &quot;M&quot;        &quot;온라인&quot; 
+##     handwriting 
+##            &quot;No&quot;</code></pre>
+<pre class="r"><code># author 요소의 age 속성에 매칭되는 값 찾기.
+xml_sjml %&gt;%
+  xml_find_all(&quot;//author&quot;) %&gt;% 
+  xml_attr(&quot;age&quot;)</code></pre>
+<pre><code>## [1] &quot;45&quot;</code></pre>
+<pre class="r"><code># header 정보와 text 정보를 결합한 티블 만들기.
+xml_sjml.tb &lt;- tibble(
+  title = xml_text(xml_find_all(xml_sjml, &quot;//title&quot;)), # xml_sjml 객체에서 &lt;title&gt; 요소 가져온 뒤 그 결과값을 텍스트로 변환하기.
+  category = xml_text(xml_find_all(xml_sjml, &quot;//category&quot;)), # xml_sjml 객체에서 &lt;category&gt; 요소 가져온 뒤 그 결과값을 텍스트로 변환하기.
+  author_age = as.numeric(xml_attr(xml_find_all(xml_sjml, &quot;//author&quot;), &quot;age&quot;)), # xml_sjml 객체에서 &lt;author&gt; 요소의 age 속성만 추출한 뒤 그 결과값을 숫자(원래는 텍스트로 되어 있음)로 변환하기.
+  author_occupation = xml_attr(xml_find_all(xml_sjml, &quot;//author&quot;), &quot;occupation&quot;), # xml_sjml 객체에서 &lt;author&gt; 요소의 occupation 속성만 추출한 뒤 그 결과값 가져오기.
+  author_sex = xml_attr(xml_find_all(xml_sjml, &quot;//author&quot;), &quot;sex&quot;), # xml_sjml 객체에서 &lt;author&gt; 요소의 sex 속성만 추출한 뒤 그 결과값 가져오기.
+  author_submission = xml_attr(xml_find_all(xml_sjml, &quot;//author&quot;), &quot;submission&quot;), # xml_sjml 객체에서 &lt;author&gt; 요소의 submission 속성만 추출한 뒤 그 결과값 가져오기.
+  author_handwriting = xml_attr(xml_find_all(xml_sjml, &quot;//author&quot;), &quot;handwriting&quot;), # xml_sjml 객체에서 &lt;author&gt; 요소의 handwriting 속성만 추출한 뒤 그 결과값 가져오기.
+  text = xml_find_all(xml_sjml, &quot;//text/p&quot;) %&gt;% # xml_sjml 객체에서 &lt;text&gt; 요소의 하위요소인 &lt;p&gt; 요소만 추출한 뒤 그 결과값을 텍스트로 변환하기.
+    xml_text())
+
+# 최종결과 확인하기.
+xml_sjml.tb</code></pre>
+<pre><code>## # A tibble: 9 × 8
+##   title       category author_age author_occupation author_sex author_submission
+##   &lt;chr&gt;       &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;             &lt;chr&gt;      &lt;chr&gt;            
+## 1 아내의 생일상…… 비출판물 &gt; …         45 직장인/전문직     M          온라인           
+## 2 아내의 생일상…… 비출판물 &gt; …         45 직장인/전문직     M          온라인           
+## 3 아내의 생일상…… 비출판물 &gt; …         45 직장인/전문직     M          온라인           
+## 4 아내의 생일상…… 비출판물 &gt; …         45 직장인/전문직     M          온라인           
+## 5 아내의 생일상…… 비출판물 &gt; …         45 직장인/전문직     M          온라인           
+## 6 아내의 생일상…… 비출판물 &gt; …         45 직장인/전문직     M          온라인           
+## 7 아내의 생일상…… 비출판물 &gt; …         45 직장인/전문직     M          온라인           
+## 8 아내의 생일상…… 비출판물 &gt; …         45 직장인/전문직     M          온라인           
+## 9 아내의 생일상…… 비출판물 &gt; …         45 직장인/전문직     M          온라인           
+## # ℹ 2 more variables: author_handwriting &lt;chr&gt;, text &lt;chr&gt;</code></pre>
+<pre class="r"><code>## 연습 2: 여러 XML 파일을 한꺼번에 불러와 티블로 만들기.
+
+xml_list &lt;- list.files(path = &quot;xml_week2&quot;, pattern = &quot;sjml$&quot;, recursive = T)
+xml_list.1 &lt;- str_c(&quot;xml_week2/&quot;, xml_list)
+xml_list.1[1:10]</code></pre>
+<pre><code>##  [1] &quot;xml_week2/WDRW1900100013.sjml&quot; &quot;xml_week2/WDRW1900100015.sjml&quot;
+##  [3] &quot;xml_week2/WDRW1900100023.sjml&quot; &quot;xml_week2/WDRW1900100027.sjml&quot;
+##  [5] &quot;xml_week2/WDRW1900100031.sjml&quot; &quot;xml_week2/WDRW1900100037.sjml&quot;
+##  [7] &quot;xml_week2/WDRW1900100040.sjml&quot; &quot;xml_week2/WDRW1900100044.sjml&quot;
+##  [9] &quot;xml_week2/WDRW1900100046.sjml&quot; &quot;xml_week2/WDRW1900100053.sjml&quot;</code></pre>
+<pre class="r"><code>sjml_result &lt;- map_dfr(xml_list.1[1:10], ~{
+  xml_sjml &lt;- read_xml(.x)
+  xml_sjml_td &lt;-  tibble(
+    title = xml_text(xml_find_all(xml_sjml, &quot;//title&quot;)),
+    category = xml_text(xml_find_all(xml_sjml, &quot;//category&quot;)),
+    author_age = as.numeric(xml_attr(xml_find_all(xml_sjml, &quot;//author&quot;), &quot;age&quot;)),
+    author_occupation = xml_attr(xml_find_all(xml_sjml, &quot;//author&quot;), &quot;occupation&quot;),
+    author_sex = xml_attr(xml_find_all(xml_sjml, &quot;//author&quot;), &quot;sex&quot;),
+    author_submission = xml_attr(xml_find_all(xml_sjml, &quot;//author&quot;), &quot;submission&quot;),
+    author_handwriting = xml_attr(xml_find_all(xml_sjml, &quot;//author&quot;), &quot;handwriting&quot;),
+    text = xml_find_all(xml_sjml, &quot;//text/p&quot;) %&gt;% 
+      xml_text() %&gt;% 
+      str_c(collapse = &quot; &quot;) # 행갈이 단위로 분절된 텍스트를 띄어쓰기 단위로 이어주기. 이 작업을 해주지 않으면 티블의 한 행(row)이 하나의 xml 파일이 아니라, 한 xml 파일 내 text의 한 행이 되어버림. 그렇게 되면 티블의 행 수가 기하급수적으로 늘어나버림.
+  )
+  }
+  )
+
+# 최종결과 확인하기.
+sjml_result</code></pre>
+<pre><code>## # A tibble: 10 × 8
+##    title      category author_age author_occupation author_sex author_submission
+##    &lt;chr&gt;      &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;             &lt;chr&gt;      &lt;chr&gt;            
+##  1 아내의 생일상…… 비출판물 &gt; …         45 직장인/전문직     M          온라인           
+##  2 소금이 온다…… 비출판물 &gt; …          7 초등학생          M          온라인           
+##  3 졸업       비출판물 &gt; …         24 대학생/대학원생   F          온라인           
+##  4 감사일기   비출판물 &gt; …         47 직장인/전문직     F          온라인           
+##  5 환경과 패스트패션… 비출판물 &gt; …         44 직장인/전문직     F          온라인           
+##  6 58년 개띠  비출판물 &gt; …         61 전업주부          M          온라인           
+##  7 바이러스   비출판물 &gt; …         28 직장인/전문직     F          온라인           
+##  8 일하기싫다 비출판물 &gt; …         27 직장인/전문직     F          온라인           
+##  9 힘들다는 것이 어… 비출판물 &gt; …         44 직장인/전문직     M          온라인           
+## 10 내  인생 영화,… 비출판물 &gt; …         45 직장인/전문직     F          온라인           
+## # ℹ 2 more variables: author_handwriting &lt;chr&gt;, text &lt;chr&gt;</code></pre>
+</div>
 <div id="pdf" class="section level3">
-<h3>5) pdf</h3>
+<h3>6) pdf</h3>
 <ul>
 <li><strong>pdftools</strong> 패키지: pdf 파일을 R로 불러들이는 패키지.
 <ul>
@@ -2423,7 +2631,7 @@ pdf.list.2 %&gt;%
   write_lines(&quot;pdf.list.2.txt&quot;) # text 칼럼만 텍스트 파일로 저장하기.</code></pre>
 </div>
 <div id="epub" class="section level3">
-<h3>6) epub</h3>
+<h3>7) epub</h3>
 <ul>
 <li>epub 파일 리더/뷰어 컴퓨터 설치: <a href="https://www.adobe.com/solutions/ebook/digital-editions/download.html">adobe
 digital editions</a>가 대표적.</li>
@@ -2533,6 +2741,10 @@ for (i in 1:nrow(epub.df[, c(2,4,5,8)])) { # epub.df 티블에서 중요한 정�
 
 new_data_tibble.1 &lt;- map_dfr(epub.df$data, as_tibble) %&gt;% # 리스트 형식인 epub.df$data를 행 단위로 쌓은 티블 형식으로 변환하기.
   filter(str_detect(section, &quot;cov|Cov|toc|TOC&quot;) == F) # cover, 목차 관련 정보는 제거하기.
+save(new_data_tibble.1, file=&quot;new_data_tibble.1.rda&quot;) # 나중을 위해 객체 저장하기.
+write_csv(new_data_tibble.1, &quot;new_data_tibble.1.csv&quot;) # csv 파일 형태로 저장하기.
+
+# 최종결과 확인하기.
 new_data_tibble.1</code></pre>
 <pre><code>## # A tibble: 1,787 × 7
 ##    language creator title        section              text           nword nchar
@@ -2548,8 +2760,6 @@ new_data_tibble.1</code></pre>
 ##  9 ko       서광운  4차원의 전쟁 Part02_Sec004.xhtml  &quot;작품 해설\n\n  \…    13  1635
 ## 10 ko       서광운  4차원의 전쟁 Part02_Sec005.xhtml  &quot;4차원의 전쟁\n\n …    16   374
 ## # ℹ 1,777 more rows</code></pre>
-<pre class="r"><code>save(new_data_tibble.1, file=&quot;new_data_tibble.1.rda&quot;) # 나중을 위해 객체 저장하기.
-write_csv(new_data_tibble.1, &quot;new_data_tibble.1.csv&quot;) # csv 파일 형태로 저장하기.</code></pre>
 </div>
 </div>
 </div>
