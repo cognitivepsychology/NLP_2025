@@ -1612,8 +1612,11 @@ font-size: 0.95em;
 <li>정의: 웹사이트로부터 데이터를 추출하는 과정.</li>
 <li>절차: 웹페이지 렌더링 시 서버로부터 텍스트 파일 형태로 정보를
 받아옴. 해당 텍스트는 HTML(hyper text markup language)라는 언어로 쓰인
-코드임. 모든 브라우저는 html 소스 코드를 보여줌. 크롬은 Ctrl + U 또는
-F12를 사용.</li>
+코드임. 모든 브라우저는 html 소스 코드를 보여줌.
+<ul>
+<li>윈도우 크롬: Ctrl + U 또는 F12를 사용.</li>
+<li>맥 사파리: ⌥ Option + ⌘ Command + I를 사용.</li>
+</ul></li>
 <li>예시 1: <a href="https://www.gutenberg.org/files/37423/37423-h/37423-h.htm">Project
 Gutenberg EBook of <em>How We Think</em> by John Dewey</a></li>
 <li>예시 2: <a href="https://rvest.tidyverse.org/articles/starwars.html">스타워즈
@@ -1800,14 +1803,14 @@ h</code></pre>
 섹션 내에 저장되어 있음. [EX]
 <code>&lt;body&gt; ...컨텐츠... &lt;/body&gt;</code></li>
 </ul>
-<pre class="r"><code># How We Think e북 웹페이지 h의 테이블 노드 추출하기.
-tab &lt;- h %&gt;% 
+<pre class="r"><code># How We Think e북 웹페이지 h의 바디 노드 추출하기.
+h_body &lt;- h %&gt;% 
   html_nodes(&quot;body&quot;)
-tab</code></pre>
+h_body</code></pre>
 <pre><code>## {xml_nodeset (1)}
 ## [1] &lt;body&gt;\r\n\r\n\r\n&lt;pre&gt;\r\n\r\nThe Project Gutenberg EBook of How We Thin ...</code></pre>
-<pre class="r"><code># 원하는 테이블이 tab의 첫 번째일 경우.
-tab[[1]]</code></pre>
+<pre class="r"><code># 원하는 바디가 h_body의 첫 번째일 경우.
+h_body[[1]]</code></pre>
 <pre><code>## {html_node}
 ## &lt;body&gt;
 ##  [1] &lt;pre&gt;\r\n\r\nThe Project Gutenberg EBook of How We Think, by John Dewey\ ...
