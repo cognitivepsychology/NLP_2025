@@ -2462,32 +2462,93 @@ xml_sjml.tb</code></pre>
 
 xml_list &lt;- list.files(path = &quot;xml_week2&quot;, pattern = &quot;sjml$&quot;, recursive = T)
 xml_list.1 &lt;- str_c(&quot;xml_week2/&quot;, xml_list)
-xml_list.1[1:10]</code></pre>
-<pre><code>##  [1] &quot;xml_week2/WDRW1900100013.sjml&quot; &quot;xml_week2/WDRW1900100015.sjml&quot;
-##  [3] &quot;xml_week2/WDRW1900100023.sjml&quot; &quot;xml_week2/WDRW1900100027.sjml&quot;
-##  [5] &quot;xml_week2/WDRW1900100031.sjml&quot; &quot;xml_week2/WDRW1900100037.sjml&quot;
-##  [7] &quot;xml_week2/WDRW1900100040.sjml&quot; &quot;xml_week2/WDRW1900100044.sjml&quot;
-##  [9] &quot;xml_week2/WDRW1900100046.sjml&quot; &quot;xml_week2/WDRW1900100053.sjml&quot;</code></pre>
-<pre class="r"><code>sjml_result &lt;- map_dfr(xml_list.1[1:10], ~{
-  xml_sjml &lt;- read_xml(.x)
-  xml_sjml_td &lt;-  tibble(
-    title = xml_text(xml_find_all(xml_sjml, &quot;//title&quot;)),
-    category = xml_text(xml_find_all(xml_sjml, &quot;//category&quot;)),
-    author_age = as.numeric(xml_attr(xml_find_all(xml_sjml, &quot;//author&quot;), &quot;age&quot;)),
-    author_occupation = xml_attr(xml_find_all(xml_sjml, &quot;//author&quot;), &quot;occupation&quot;),
-    author_sex = xml_attr(xml_find_all(xml_sjml, &quot;//author&quot;), &quot;sex&quot;),
-    author_submission = xml_attr(xml_find_all(xml_sjml, &quot;//author&quot;), &quot;submission&quot;),
-    author_handwriting = xml_attr(xml_find_all(xml_sjml, &quot;//author&quot;), &quot;handwriting&quot;),
-    text = xml_find_all(xml_sjml, &quot;//text/p&quot;) %&gt;% 
-      xml_text() %&gt;% 
-      str_c(collapse = &quot; &quot;) # 행갈이 단위로 분절된 텍스트를 띄어쓰기 단위로 이어주기. 이 작업을 해주지 않으면 티블의 한 행(row)이 하나의 xml 파일이 아니라, 한 xml 파일 내 text의 한 행이 되어버림. 그렇게 되면 티블의 행 수가 기하급수적으로 늘어나버림.
-  )
-  }
-  )
+xml_list.1[1:100]</code></pre>
+<pre><code>##   [1] &quot;xml_week2/WDRW1900100013.sjml&quot; &quot;xml_week2/WDRW1900100015.sjml&quot;
+##   [3] &quot;xml_week2/WDRW1900100023.sjml&quot; &quot;xml_week2/WDRW1900100027.sjml&quot;
+##   [5] &quot;xml_week2/WDRW1900100031.sjml&quot; &quot;xml_week2/WDRW1900100037.sjml&quot;
+##   [7] &quot;xml_week2/WDRW1900100040.sjml&quot; &quot;xml_week2/WDRW1900100044.sjml&quot;
+##   [9] &quot;xml_week2/WDRW1900100046.sjml&quot; &quot;xml_week2/WDRW1900100053.sjml&quot;
+##  [11] &quot;xml_week2/WDRW1900100055.sjml&quot; &quot;xml_week2/WDRW1900100056.sjml&quot;
+##  [13] &quot;xml_week2/WDRW1900100057.sjml&quot; &quot;xml_week2/WDRW1900100058.sjml&quot;
+##  [15] &quot;xml_week2/WDRW1900100060.sjml&quot; &quot;xml_week2/WDRW1900100061.sjml&quot;
+##  [17] &quot;xml_week2/WDRW1900100062.sjml&quot; &quot;xml_week2/WDRW1900100063.sjml&quot;
+##  [19] &quot;xml_week2/WDRW1900100067.sjml&quot; &quot;xml_week2/WDRW1900100068.sjml&quot;
+##  [21] &quot;xml_week2/WDRW1900100073.sjml&quot; &quot;xml_week2/WDRW1900100075.sjml&quot;
+##  [23] &quot;xml_week2/WDRW1900100076.sjml&quot; &quot;xml_week2/WDRW1900100078.sjml&quot;
+##  [25] &quot;xml_week2/WDRW1900100079.sjml&quot; &quot;xml_week2/WDRW1900100081.sjml&quot;
+##  [27] &quot;xml_week2/WDRW1900100083.sjml&quot; &quot;xml_week2/WDRW1900100090.sjml&quot;
+##  [29] &quot;xml_week2/WDRW1900100091.sjml&quot; &quot;xml_week2/WDRW1900100092.sjml&quot;
+##  [31] &quot;xml_week2/WDRW1900100101.sjml&quot; &quot;xml_week2/WDRW1900100105.sjml&quot;
+##  [33] &quot;xml_week2/WDRW1900100106.sjml&quot; &quot;xml_week2/WDRW1900100107.sjml&quot;
+##  [35] &quot;xml_week2/WDRW1900100113.sjml&quot; &quot;xml_week2/WDRW1900100114.sjml&quot;
+##  [37] &quot;xml_week2/WDRW1900100115.sjml&quot; &quot;xml_week2/WDRW1900100118.sjml&quot;
+##  [39] &quot;xml_week2/WDRW1900100121.sjml&quot; &quot;xml_week2/WDRW1900100122.sjml&quot;
+##  [41] &quot;xml_week2/WDRW1900100125.sjml&quot; &quot;xml_week2/WDRW1900100126.sjml&quot;
+##  [43] &quot;xml_week2/WDRW1900100128.sjml&quot; &quot;xml_week2/WDRW1900100135.sjml&quot;
+##  [45] &quot;xml_week2/WDRW1900100137.sjml&quot; &quot;xml_week2/WDRW1900100143.sjml&quot;
+##  [47] &quot;xml_week2/WDRW1900100147.sjml&quot; &quot;xml_week2/WDRW1900100149.sjml&quot;
+##  [49] &quot;xml_week2/WDRW1900100150.sjml&quot; &quot;xml_week2/WDRW1900100152.sjml&quot;
+##  [51] &quot;xml_week2/WDRW1900100153.sjml&quot; &quot;xml_week2/WDRW1900100154.sjml&quot;
+##  [53] &quot;xml_week2/WDRW1900100156.sjml&quot; &quot;xml_week2/WDRW1900100158.sjml&quot;
+##  [55] &quot;xml_week2/WDRW1900100159.sjml&quot; &quot;xml_week2/WDRW1900100161.sjml&quot;
+##  [57] &quot;xml_week2/WDRW1900100164.sjml&quot; &quot;xml_week2/WDRW1900100166.sjml&quot;
+##  [59] &quot;xml_week2/WDRW1900100168.sjml&quot; &quot;xml_week2/WDRW1900100170.sjml&quot;
+##  [61] &quot;xml_week2/WDRW1900100171.sjml&quot; &quot;xml_week2/WDRW1900100172.sjml&quot;
+##  [63] &quot;xml_week2/WDRW1900100173.sjml&quot; &quot;xml_week2/WDRW1900100174.sjml&quot;
+##  [65] &quot;xml_week2/WDRW1900100175.sjml&quot; &quot;xml_week2/WDRW1900100176.sjml&quot;
+##  [67] &quot;xml_week2/WDRW1900100177.sjml&quot; &quot;xml_week2/WDRW1900100178.sjml&quot;
+##  [69] &quot;xml_week2/WDRW1900100181.sjml&quot; &quot;xml_week2/WDRW1900100182.sjml&quot;
+##  [71] &quot;xml_week2/WDRW1900100183.sjml&quot; &quot;xml_week2/WDRW1900100184.sjml&quot;
+##  [73] &quot;xml_week2/WDRW1900100186.sjml&quot; &quot;xml_week2/WDRW1900100187.sjml&quot;
+##  [75] &quot;xml_week2/WDRW1900100188.sjml&quot; &quot;xml_week2/WDRW1900100189.sjml&quot;
+##  [77] &quot;xml_week2/WDRW1900100190.sjml&quot; &quot;xml_week2/WDRW1900100191.sjml&quot;
+##  [79] &quot;xml_week2/WDRW1900100192.sjml&quot; &quot;xml_week2/WDRW1900100193.sjml&quot;
+##  [81] &quot;xml_week2/WDRW1900100194.sjml&quot; &quot;xml_week2/WDRW1900100197.sjml&quot;
+##  [83] &quot;xml_week2/WDRW1900100198.sjml&quot; &quot;xml_week2/WDRW1900100200.sjml&quot;
+##  [85] &quot;xml_week2/WDRW1900100203.sjml&quot; &quot;xml_week2/WDRW1900100204.sjml&quot;
+##  [87] &quot;xml_week2/WDRW1900100206.sjml&quot; &quot;xml_week2/WDRW1900100207.sjml&quot;
+##  [89] &quot;xml_week2/WDRW1900100208.sjml&quot; &quot;xml_week2/WDRW1900100209.sjml&quot;
+##  [91] &quot;xml_week2/WDRW1900100210.sjml&quot; &quot;xml_week2/WDRW1900100211.sjml&quot;
+##  [93] &quot;xml_week2/WDRW1900100214.sjml&quot; &quot;xml_week2/WDRW1900100216.sjml&quot;
+##  [95] &quot;xml_week2/WDRW1900100218.sjml&quot; &quot;xml_week2/WDRW1900100220.sjml&quot;
+##  [97] &quot;xml_week2/WDRW1900100222.sjml&quot; &quot;xml_week2/WDRW1900100228.sjml&quot;
+##  [99] &quot;xml_week2/WDRW1900100229.sjml&quot; &quot;xml_week2/WDRW1900100230.sjml&quot;</code></pre>
+<pre class="r"><code>sjml_result &lt;- map_dfr(xml_list.1[1:100], ~{
+    tryCatch( # 연속작업 실행 중 오류가 생길 시 이를 건너뛰고 다음 작업으로 이행하도록 해줌.
+      expr = { # 함수에 대한 기술.
+        xml_sjml &lt;- read_xml(.x)
+        xml_sjml_td &lt;- tibble(
+          title = xml_text(xml_find_all(xml_sjml, &quot;//title&quot;)),
+          category = xml_text(xml_find_all(xml_sjml, &quot;//category&quot;)),
+          author_age = as.numeric(xml_attr(xml_find_all(xml_sjml, &quot;//author&quot;), &quot;age&quot;)),
+          author_occupation = xml_attr(xml_find_all(xml_sjml, &quot;//author&quot;), &quot;occupation&quot;),
+          author_sex = xml_attr(xml_find_all(xml_sjml, &quot;//author&quot;), &quot;sex&quot;),
+          author_submission = xml_attr(xml_find_all(xml_sjml, &quot;//author&quot;), &quot;submission&quot;),
+          author_handwriting = xml_attr(xml_find_all(xml_sjml, &quot;//author&quot;), &quot;handwriting&quot;),
+          text = xml_find_all(xml_sjml, &quot;//text/p&quot;) %&gt;% 
+            xml_text() %&gt;% 
+            str_c(collapse = &quot; &quot;) # 행갈이 단위로 분절된 텍스트를 띄어쓰기 단위로 이어주기. 이 작업을 해주지 않으면 티블의 한 행(row)이 하나의 xml 파일이 아니라, 한 xml 파일 내 text의 한 행이 되어버림. 그렇게 되면 티블의 행 수가 기하급수적으로 늘어나버림.
+        )
+        message(str_c(&quot;성공: &quot;, .x , &quot;에서 텍스트를 추출함.&quot;)) # 성공 메시지 출력하기.
+       
+        # 성공 시 결과 티블을 반환함.
+        return(xml_sjml_td)
+      },
+      error = function(err) {
+        message(str_c(&quot;실패: &quot;, .x, &quot;에서 오류가 발생하여 건너뜀.&quot;)) # 문제가 있는 xml 파일은 텍스트 추출을 건너뜀([EX] &quot;xml_week2/WDRW1900100105.sjml&quot;은 원인불명의 문제를 일으켜 티블로 합병되지 않음).
+        
+        # 오류 시 빈 티블을 반환함.
+        return(tibble())
+      }
+    )
+  })
+
+# 최종결과 저장하기.
+save(sjml_result, file=&quot;sjml_result.rda&quot;)
 
 # 최종결과 확인하기.
 sjml_result</code></pre>
-<pre><code>## # A tibble: 10 × 8
+<pre><code>## # A tibble: 94 × 8
 ##    title      category author_age author_occupation author_sex author_submission
 ##    &lt;chr&gt;      &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;             &lt;chr&gt;      &lt;chr&gt;            
 ##  1 아내의 생일상…… 비출판물 &gt; …         45 직장인/전문직     M          온라인           
@@ -2500,6 +2561,7 @@ sjml_result</code></pre>
 ##  8 일하기싫다 비출판물 &gt; …         27 직장인/전문직     F          온라인           
 ##  9 힘들다는 것이 어… 비출판물 &gt; …         44 직장인/전문직     M          온라인           
 ## 10 내  인생 영화,… 비출판물 &gt; …         45 직장인/전문직     F          온라인           
+## # ℹ 84 more rows
 ## # ℹ 2 more variables: author_handwriting &lt;chr&gt;, text &lt;chr&gt;</code></pre>
 </div>
 <div id="pdf" class="section level3">
