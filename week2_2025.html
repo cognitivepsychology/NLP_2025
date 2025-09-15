@@ -2064,6 +2064,9 @@ library(readxl) # 엑셀 파일을 R로 읽어들일 수 있도록 해주는 패
 # 빅카인즈 사이트에서 검색한 결과물(엑셀 스프레드 시트 형식)을 R로 불러들이기.
 kinds.results &lt;- read_excel(&quot;NewsResult_20240903-20250903.xlsx&quot;)
 
+# 경향신문 기사 파일을 저장할 디렉토리 생성하기.
+dir.create(&quot;article_week2&quot;)
+
 # 경향신문 기사의 url만 추려내기.
 kinds.results.kh.url &lt;- kinds.results %&gt;%
   filter(`언론사` == &quot;경향신문&quot;) %&gt;%
