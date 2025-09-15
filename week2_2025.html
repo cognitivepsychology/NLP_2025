@@ -2065,7 +2065,7 @@ library(readxl) # 엑셀 파일을 R로 읽어들일 수 있도록 해주는 패
 kinds.results &lt;- read_excel(&quot;NewsResult_20240903-20250903.xlsx&quot;)
 
 # 경향신문 기사 파일을 저장할 디렉토리 생성하기.
-dir.create(&quot;article_week2&quot;)
+dir.create(&quot;article_week2&quot;) # 반드시 R 프로젝트 파일이 있는 워킹 디렉토리(working directory)에서 R 스크립트를 작성해야 함! 워킹 디렉토리를 확인하려면 getwd() 함수를 실행할 것.
 
 # 경향신문 기사의 url만 추려내기.
 kinds.results.kh.url &lt;- kinds.results %&gt;%
