@@ -17,9 +17,10 @@ h3{font-size: 18pt}
 h4{font-size: 16pt}
 h5{font-size: 14pt}
 h6{
-  font-size: 12pt;
+  font-size: 13pt;
   font-weight: 100;
-  color: grey;
+  color: black
+  ;
 }
 /* Whole document: */
 body{
