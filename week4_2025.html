@@ -3662,8 +3662,15 @@ PMI(부정 극성과 공기하는 단어)</li>
 <li>최종 감성 예측: 총점이 양수면, 긍정 리뷰, 총점이 음수면 부정 리뷰,
 0이면 중립 리뷰로 간주.</li>
 </ul></li>
-<li>단점: “지루하지 않다” 같은 장형 부정이나 “재미가 없다”처럼 부정어가
-포함된 문자열을 처리할 때 한계가 있음.</li>
+<li>단점
+<ul>
+<li>지루하지 않다” 같은 장형 부정이나 “재미가 없다”처럼 부정어가 포함된
+문자열을 처리할 때 한계가 있음.</li>
+<li>빈도가 극히 낮은 단어의 경우 분모가 0에 가까워져 PMI 점수가
+비정상적으로 높게 산출되는 <strong>폭주(explosion)</strong> 현상을
+일으킬 수 있음. 이를 위해 최소 빈도 이하의 단어를 미리 제거할 필요가
+있음.</li>
+</ul></li>
 </ul></li>
 </ul>
 <p><strong>[그림 4] PMI 계산식</strong></p>
@@ -3685,9 +3692,15 @@ PMI(부정 극성과 공기하는 단어)</li>
 </div>
 <div id="b.-단계-2-각-단어와-감성의-빈도-및-확률-계산하기" class="section level4">
 <h4>B. 단계 2: 각 단어와 감성의 빈도 및 확률 계산하기</h4>
-<pre class="r"><code>word_counts &lt;- word_tokens %&gt;%
+<pre class="r"><code>min_frequency &lt;- 2 # 최소 빈도 임계값 설정하기.
+
+word_counts &lt;- word_tokens %&gt;%
   count(word, sort = TRUE) %&gt;% # word 칼럼 기준으로 빈도 계산하기.
+  filter(n &gt;= min_frequency) %&gt;% # 최소 빈도 2 이상인 단어만 추출하기.
   mutate(p_word = n / sum(n)) #  단어 확률 계산하기.
+
+word_tokens &lt;- word_tokens %&gt;%
+  semi_join(word_counts, by = &quot;word&quot;) # word_counts 티블의 word 칼럼에 존재하는 빈도 2 이상의 토큰만 남김.
 
 sentiment_counts &lt;- word_tokens %&gt;%
   distinct(id, label) %&gt;% # 중복되는 행 제외하기.
@@ -3721,20 +3734,20 @@ sentiment_counts &lt;- word_tokens %&gt;%
                                  T ~ &quot;부정&quot;)) # 감성점수가 0 이하이면 &quot;부정&quot;으로 라벨링.
 save(sentiment_score, file=&quot;sentiment_score.rda&quot;)
 sentiment_score</code></pre>
-<pre><code>## # A tibble: 2,933 × 5
+<pre><code>## # A tibble: 1,041 × 5
 ##    word   negative positive score senti_label
 ##    &lt;chr&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      
-##  1 최고      -2.80    0.889  3.69 긍정       
-##  2 아쉽      -2.58    0.870  3.45 긍정       
-##  3 아름답    -2.46    0.858  3.31 긍정       
-##  4 3         -2.32    0.844  3.16 긍정       
-##  5 그리고    -2.32    0.844  3.16 긍정       
-##  6 여운      -2.32    0.844  3.16 긍정       
-##  7 추천      -2.32    0.844  3.16 긍정       
-##  8 가슴      -2.17    0.826  2.99 긍정       
-##  9 재미있    -2.05    0.811  2.87 긍정       
-## 10 사랑      -1.95    0.796  2.75 긍정       
-## # ℹ 2,923 more rows</code></pre>
+##  1 최고      -2.80    0.887  3.69 긍정       
+##  2 아쉽      -2.58    0.869  3.45 긍정       
+##  3 아름답    -2.45    0.857  3.31 긍정       
+##  4 3         -2.32    0.842  3.16 긍정       
+##  5 그리고    -2.32    0.842  3.16 긍정       
+##  6 여운      -2.32    0.842  3.16 긍정       
+##  7 추천      -2.32    0.842  3.16 긍정       
+##  8 가슴      -2.16    0.824  2.99 긍정       
+##  9 재미있    -2.05    0.810  2.86 긍정       
+## 10 사랑      -1.95    0.795  2.74 긍정       
+## # ℹ 1,031 more rows</code></pre>
 </div>
 <div id="f.-단계-6-감성점수-상위하위-단어-추출하기" class="section level4">
 <h4>F. 단계 6: 감성점수 상위/하위 단어 추출하기</h4>
@@ -3747,16 +3760,16 @@ top_words</code></pre>
 <pre><code>## # A tibble: 23 × 6
 ##    word   negative positive score senti_label direction
 ##    &lt;chr&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;    
-##  1 쓰레기    0.952   -3.81  -4.76 부정        negative 
-##  2 재미없    0.934   -3.40  -4.33 부정        negative 
-##  3 별로      0.911   -3.00  -3.92 부정        negative 
-##  4 최고     -2.80     0.889  3.69 긍정        positive 
-##  5 개        0.879   -2.59  -3.47 부정        negative 
-##  6 아쉽     -2.58     0.870  3.45 긍정        positive 
-##  7 아름답   -2.46     0.858  3.31 긍정        positive 
-##  8 3        -2.32     0.844  3.16 긍정        positive 
-##  9 그리고   -2.32     0.844  3.16 긍정        positive 
-## 10 여운     -2.32     0.844  3.16 긍정        positive 
+##  1 쓰레기    0.953   -3.81  -4.77 부정        negative 
+##  2 재미없    0.936   -3.40  -4.33 부정        negative 
+##  3 별로      0.913   -3.01  -3.92 부정        negative 
+##  4 최고     -2.80     0.887  3.69 긍정        positive 
+##  5 개        0.880   -2.59  -3.47 부정        negative 
+##  6 아쉽     -2.58     0.869  3.45 긍정        positive 
+##  7 아름답   -2.45     0.857  3.31 긍정        positive 
+##  8 3        -2.32     0.842  3.16 긍정        positive 
+##  9 그리고   -2.32     0.842  3.16 긍정        positive 
+## 10 여운     -2.32     0.842  3.16 긍정        positive 
 ## # ℹ 13 more rows</code></pre>
 </div>
 </div>
@@ -3931,16 +3944,16 @@ movie_ratings_with_score </code></pre>
 ## 10 청춘 꿈 관하 영화 지극히 현실 인생 대하 생각 주 영화          
 ##    total_senti_score polarity total_senti_logical
 ##                &lt;dbl&gt;    &lt;dbl&gt; &lt;lgl&gt;              
-##  1            -4.66         0 TRUE               
-##  2             0.972        1 TRUE               
-##  3             0.309        1 FALSE              
-##  4            -1.01         0 TRUE               
-##  5             2.31         1 FALSE              
-##  6            -1.17         0 TRUE               
-##  7             2.08         1 TRUE               
-##  8             3.35         1 FALSE              
-##  9             2.15         1 TRUE               
-## 10             0.930        1 TRUE               
+##  1            -2.67         0 TRUE               
+##  2             0.960        1 TRUE               
+##  3             0.304        1 FALSE              
+##  4            -1.02         0 TRUE               
+##  5             1.30         1 FALSE              
+##  6            -1.20         0 TRUE               
+##  7             2.07         1 TRUE               
+##  8             0.358        1 FALSE              
+##  9             1.14         1 TRUE               
+## 10             0.908        1 TRUE               
 ## # ℹ 990 more rows</code></pre>
 </div>
 <div id="c.-pmi-기반-감성분류의-정확도-계산하기" class="section level5">
@@ -3953,7 +3966,7 @@ movie_ratings_with_score </code></pre>
 <pre><code>## # A tibble: 1 × 1
 ##   accuracy
 ##      &lt;dbl&gt;
-## 1    0.758</code></pre>
+## 1    0.761</code></pre>
 </div>
 </div>
 </div>
