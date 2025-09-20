@@ -2701,7 +2701,8 @@ download.file(url = stop_words_url,
 
 # 티블 형식으로 불용어 목록 불러오기.
 library(readxl) # 엑셀 파일을 R로 불러오는 패키지.
-gil_noh_stopwords_final &lt;- read_excel(stop_words.path)</code></pre>
+gil_noh_stopwords_final &lt;- read_excel(stop_words.path)
+save(gil_noh_stopwords_final, file=&quot;gil_noh_stopwords_final.rda&quot;)</code></pre>
 </div>
 </div>
 <div id="불용어-목록-제외한-단어-빈도-계산하기" class="section level3">
@@ -2798,8 +2799,8 @@ sjml_result %&gt;%
 </div>
 </div>
 </div>
-<div id="tidy-텍스트로-감성분석sentiment-analysis-수행하기" class="section level1">
-<h1>2. tidy 텍스트로 감성분석(sentiment analysis) 수행하기</h1>
+<div id="감성분석sentiment-analysis-수행하기" class="section level1">
+<h1>2. 감성분석(sentiment analysis) 수행하기</h1>
 <div id="감성분석-개관" class="section level2">
 <h2>(1) 감성분석 개관</h2>
 <ul>
@@ -3631,7 +3632,7 @@ sjml_result.KOSAC.1</code></pre>
 </div>
 </div>
 <div id="단어별-감성점수-산출하기" class="section level2">
-<h2>(2) 단어별 감성점수 산출하기</h2>
+<h2>(3) 단어별 감성점수 산출하기</h2>
 <div id="점-상호정보량pointwise-mutual-information-pmi" class="section level3">
 <h3>1) 점 상호정보량(pointwise mutual information, PMI)</h3>
 <ul>
