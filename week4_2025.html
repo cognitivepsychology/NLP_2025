@@ -2208,11 +2208,11 @@ library(reticulate)</code></pre>
 <ul>
 <li>2단계: 파이썬 가상 환경 만들기</li>
 </ul>
-<pre class="r"><code># 파이썬 가상환경 생성하기(이름은 무엇으로 짓든 상관없음. 단, 한 번만 하면 끝!).
-conda_create(&quot;r-reticulate&quot;, python_version = &quot;3.10&quot;) # 파이썬은 3.8이나 3.10 버전이 가장 안정적.
+<pre class="r"><code># 파이썬 가상환경 생성하기(이름은 무엇으로 짓든 상관없음. 단, 하이픈이나 특수문자는 허용되지 않음. 한 번만 하면 끝!).
+conda_create(&quot;my_env&quot;, python_version = &quot;3.10&quot;) # 파이썬은 3.8이나 3.10 버전이 가장 안정적.
 
 # R 세션에서 이 새로운 가상환경을 사용하도록 설정하기(세션마다 해줘야 함!).
-use_condaenv(&quot;r-reticulate&quot;)</code></pre>
+use_condaenv(&quot;my_env&quot;)</code></pre>
 <ul>
 <li>3단계: <strong>kiwipiepy</strong> 패키지 설치하기</li>
 </ul>
@@ -2412,13 +2412,13 @@ movie_ratings_train_tokenized</code></pre>
 library(reticulate)
 library(tidyverse) 
 
-use_condaenv(&quot;r-reticulate&quot;) # 새 세션마다 설정.
-
-kiwi &lt;- import(&quot;kiwipiepy&quot;)$Kiwi()
+use_condaenv(&quot;my_env&quot;) # 새 세션마다 설정.</code></pre>
+<pre class="r"><code>kiwi &lt;- import(&quot;kiwipiepy&quot;)$Kiwi()
 
 # 불용어 목록 정의 (&quot;형태소/품사태그&quot; 형식)
 # 형태소/품사태그([EX] &quot;하/XSA&quot;) 형태로 불용어를 정의하여 정확도 높임.
-stop_words_pos &lt;- c(&quot;이/VCP&quot;, &quot;것/NNB&quot;, &quot;곳/NNG&quot;, &quot;곳/NNB&quot;, &quot;하/VX&quot;, &quot;하/VV&quot;, &quot;수/NNB&quot;, &quot;되/VV&quot;, &quot;하/XSA&quot;, &quot;들/XSN&quot;, &quot;되/XSA&quot;, &quot;되/XSV&quot;, &quot;하/XSV&quot;, &quot;이/VCP&quot;, &quot;이/VV&quot;, &quot;적/XSN&quot;) # 영화 리뷰이므로 &quot;영화&quot;라는 명사를 불용어 목록에 포함시킬 수도 있음.
+stop_words_pos &lt;- c(&quot;이/VCP&quot;, &quot;것/NNB&quot;, &quot;곳/NNG&quot;, &quot;곳/NNB&quot;, &quot;하/VX&quot;, &quot;하/VV&quot;, &quot;수/NNB&quot;, &quot;되/VV&quot;, &quot;하/XSA&quot;, &quot;들/XSN&quot;,
+                    &quot;되/XSA&quot;, &quot;되/XSV&quot;, &quot;하/XSV&quot;, &quot;이/VCP&quot;, &quot;이/VV&quot;, &quot;적/XSN&quot;) # 영화 리뷰이므로 &quot;영화&quot;라는 명사를 불용어 목록에 포함시킬 수도 있음.
 
 # 대용량 말뭉치
 movie_ratings_train_1000</code></pre>
@@ -2772,7 +2772,8 @@ sjml_result %&gt;%
 </ul></li>
 </ul>
 <pre class="r"><code># 빈도는 높지만 정보 값은 적은 형태소를 새로운 불용어 목록에 추가하기.
-stop_words_added &lt;- c(&quot;이/VCP&quot;, &quot;것/NNB&quot;, &quot;곳/NNG&quot;, &quot;곳/NNB&quot;, &quot;하/VX&quot;, &quot;하/VV&quot;, &quot;수/NNB&quot;, &quot;되/VV&quot;, &quot;하/XSA&quot;, &quot;들/XSN&quot;, &quot;되/XSA&quot;, &quot;되/XSV&quot;, &quot;하/XSV&quot;, &quot;이/VCP&quot;, &quot;이/VV&quot;, &quot;적/XSN&quot;)
+stop_words_added &lt;- c(&quot;이/VCP&quot;, &quot;것/NNB&quot;, &quot;곳/NNG&quot;, &quot;곳/NNB&quot;, &quot;하/VX&quot;, &quot;하/VV&quot;, &quot;수/NNB&quot;, &quot;되/VV&quot;, 
+                      &quot;하/XSA&quot;, &quot;들/XSN&quot;, &quot;되/XSA&quot;, &quot;되/XSV&quot;, &quot;하/XSV&quot;, &quot;이/VCP&quot;, &quot;이/VV&quot;, &quot;적/XSN&quot;)
 
 # anti_join과 filter 함수를 함께 사용하여 새로운 불용어 추가로 제거하기.
 sjml_result %&gt;%
@@ -3821,7 +3822,8 @@ analyze_pos_kiwi &lt;- function(text) {
     morph = .x$form,
     pos = .x$tag 
   ))
-  stop_words_pos &lt;- c(&quot;이/VCP&quot;, &quot;것/NNB&quot;, &quot;곳/NNG&quot;, &quot;곳/NNB&quot;, &quot;하/VX&quot;, &quot;하/VV&quot;, &quot;수/NNB&quot;, &quot;되/VV&quot;, &quot;하/XSA&quot;, &quot;들/XSN&quot;, &quot;되/XSA&quot;, &quot;되/XSV&quot;, &quot;하/XSV&quot;, &quot;이/VCP&quot;, &quot;이/VV&quot;, &quot;적/XSN&quot;)
+  stop_words_pos &lt;- c(&quot;이/VCP&quot;, &quot;것/NNB&quot;, &quot;곳/NNG&quot;, &quot;곳/NNB&quot;, &quot;하/VX&quot;, &quot;하/VV&quot;, &quot;수/NNB&quot;, &quot;되/VV&quot;, 
+                      &quot;하/XSA&quot;, &quot;들/XSN&quot;, &quot;되/XSA&quot;, &quot;되/XSV&quot;, &quot;하/XSV&quot;, &quot;이/VCP&quot;, &quot;이/VV&quot;, &quot;적/XSN&quot;)
   filtered_tokens &lt;- tagged_tokens %&gt;%
     filter(!str_detect(pos, &quot;^J&quot;),
            !str_detect(pos, &quot;^E&quot;),
