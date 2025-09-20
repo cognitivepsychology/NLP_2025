@@ -1965,6 +1965,14 @@ text_tb %&gt;%
 </ul></li>
 </ul>
 <pre class="r"><code>library(RcppMeCab)
+
+# sjml_result.rda 파일 다운로드하기.
+sjml_url &lt;- &quot;https://github.com/cognitivepsychology/NLP_2025/raw/main/sjml_result.rda&quot;
+download.file(url = sjml_url,
+              destfile = &quot;sjml_result.rda&quot;,
+              mode = &quot;wb&quot;
+)
+
 load(&quot;sjml_result.rda&quot;)
 
 # 메타데이터 정보를 유지하면서 텍스트 정규화하기.
@@ -2644,7 +2652,7 @@ final_data </code></pre>
 <div id="영어" class="section level4">
 <h4>1) 영어</h4>
 <ul>
-<li><code>tidytext</code> 내장 불용어 목록:
+<li><strong>tidytext</strong> 내장 불용어 목록:
 <code>data(stop_words)</code>를 불러와 사용 가능.</li>
 </ul>
 <pre class="r"><code># 영어 불용어 목록 불러오기.
@@ -2681,9 +2689,14 @@ stop_words</code></pre>
 올려두었음.</p>
 <pre class="r"><code># 불용어 목록 저장 경로 생성하기.
 dir.create(&quot;texts/stop_words&quot;) # 반드시 프로젝트 파일을 열어두고 그곳에서 R 스크립트를 실행해야 함!
+stop_words.path &lt;- &quot;texts/stop_words/korean_stop_word_list.xlsx&quot;
+stop_words_url &lt;- &quot;https://github.com/cognitivepsychology/NLP_2025/raw/main/%EA%B8%B8%ED%98%B8%EC%97%B0_%EB%85%B8%EC%84%B1%ED%99%94%26%EA%B9%80%EC%A0%95%20%ED%86%B5%ED%95%A9%20%EB%B6%88%EC%9A%A9%EC%96%B4%20%EB%AA%A9%EB%A1%9D.xlsx&quot;
 
-# 불용어 목록 저장 경로 지정하기.
-stop_words.path &lt;- &quot;texts/stop_words/길호연_노성화&amp;김정 통합 불용어 목록.xlsx&quot;
+# 불용어 목록 다운로드하기.
+download.file(url = stop_words_url,
+              destfile = stop_words.path, 
+              mode = &quot;wb&quot;
+)
 
 # 티블 형식으로 불용어 목록 불러오기.
 library(readxl) # 엑셀 파일을 R로 불러오는 패키지.
@@ -2697,7 +2710,10 @@ gil_noh_stopwords_final &lt;- read_excel(stop_words.path)</code></pre>
 일기나 수필 또는 소설 습작으로 구성됨.</li>
 </ul>
 <pre class="r"><code># 지난 시간에 만들어둔 300개 XML 텍스트 티블 불러오기.
-load(&quot;sjml_result.rda&quot;)</code></pre>
+load(&quot;sjml_result.rda&quot;)
+
+# 범용 한국어 불용어 목록 티블 불러오기.
+load(&quot;gil_noh_stopwords_final.rda&quot;)</code></pre>
 <ul>
 <li>불용어 목록 제외 전 vs. 후 단어 빈도 비교하기.</li>
 </ul>
@@ -3804,9 +3820,8 @@ analyze_pos_kiwi &lt;- function(text) {
 </div>
 <div id="b.-단계-2-nsmc-검증용-데이터셋-토큰화하기" class="section level4">
 <h4>B. 단계 2: NSMC 검증용 데이터셋 토큰화하기</h4>
-<div id="a.-데이터셋-준비하기-토근화한-nsmc-검증용-파일-감성점수-부여한-단어-목록-티블-워킹-디렉토리에-생성하기" class="section level5">
-<h5>a. 데이터셋 준비하기: 토근화한 NSMC 검증용 파일 &amp; 감성점수
-부여한 단어 목록 티블 워킹 디렉토리에 생성하기</h5>
+<div id="a.-데이터셋-준비하기" class="section level5">
+<h5>a. 데이터셋 준비하기</h5>
 <pre class="r"><code>set.seed(123) # 난수 고정용.
 library(bitNLP)
 library(stringi)
@@ -3826,8 +3841,8 @@ save(movie_ratings_test_tokenized, file= &quot;movie_ratings_test_tokenized.rda&
 load(&quot;movie_ratings_test_tokenized.rda&quot;)
 load(&quot;sentiment_score.rda&quot;)</code></pre>
 </div>
-<div id="b.-총-감성점수total_senti_score-칼럼-생성하기" class="section level5">
-<h5>b. 총 감성점수(total_senti_score) 칼럼 생성하기</h5>
+<div id="b.-총-감성점수-칼럼-생성하기" class="section level5">
+<h5>b. 총 감성점수 칼럼 생성하기</h5>
 <pre class="r"><code>movie_ratings_with_score &lt;- movie_ratings_test_tokenized %&gt;%
   mutate(
     # 1.  map_dbl을 사용해 morp 칼럼의 각 행 처리하기.
