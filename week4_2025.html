@@ -3868,7 +3868,7 @@ load(&quot;sentiment_score.rda&quot;)</code></pre>
       
       # 3. 감성점수 목록(sentiment_score) 티블에서 일치하는 단어만 필터링하고 감성점수 추출하기.
       matched_scores &lt;- sentiment_score %&gt;%
-        filter(word %in% morp_words) %&gt;% # 두 티블의 단어들 중 일치하는 것만 골라내기.
+        filter(word %in% morp_words) %&gt;% # 감성점수 티블의 단어 토큰 칼럼과 morp_words 토큰 벡터 중 일치하는 토큰만 골라내기.
         pull(score) # 감성점수 목록 티블의 score(감성점수) 항목만 벡터로 추출하기.
       
       # 4. 추출된 점수들을 모두 합산하기.
