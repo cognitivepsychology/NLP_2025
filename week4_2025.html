@@ -2206,10 +2206,22 @@ install.packages(&quot;reticulate&quot;)
 # 패키지 로드하기.
 library(reticulate)</code></pre>
 <ul>
-<li>2단계: 파이썬 가상 환경 만들기</li>
+<li>2단계: 파이썬 가상환경 만들기
+<ul>
+<li>가상환경 이름: 무엇으로 짓든 상관없음. 단, 하이픈이나 특수문자는
+지양하는 게 좋음. 한 번만 생성하면 끝!</li>
+<li>파이썬 버전: 3.8이나 3.10 버전이 가장 안정적.</li>
+<li>설치용량: 기본적으로 Anaconda는 설치용량이 5GB 이상이고, R에서는
+자동으로 C 드라이브에 설치함.</li>
+<li>수동설치 vs. R 설치: C 드라이브 용량이 충분치 않으면, 용량이 넉넉한
+드라이브에 직접 수동 설치하는 것을 권장.</li>
+</ul></li>
 </ul>
-<pre class="r"><code># 파이썬 가상환경 생성하기(이름은 무엇으로 짓든 상관없음. 단, 하이픈이나 특수문자는 허용되지 않음. 한 번만 하면 끝!).
-conda_create(&quot;my_env&quot;, python_version = &quot;3.10&quot;) # 파이썬은 3.8이나 3.10 버전이 가장 안정적.
+<pre class="r"><code># R에서 Anaconda를 설치하는 경우.
+conda_create(&quot;my_env&quot;, python_version = &quot;3.10&quot;) 
+
+# Anaconda를 이미 직접 수동 설치한 경우.
+conda_create(envname = &quot;my_env&quot;, packages = &quot;python&quot;)
 
 # R 세션에서 이 새로운 가상환경을 사용하도록 설정하기(세션마다 해줘야 함!).
 use_condaenv(&quot;my_env&quot;)</code></pre>
