@@ -2307,7 +2307,8 @@ analyze_pos_kiwi &lt;- function(text) {
   ))
   
   # 불용어 목록 정의하기(&quot;형태소/품사태그&quot; 형식).
-  stop_words_pos &lt;- c(&quot;이/VCP&quot;, &quot;것/NNB&quot;, &quot;곳/NNG&quot;, &quot;곳/NNB&quot;, &quot;하/VX&quot;, &quot;하/VV&quot;, &quot;수/NNB&quot;, &quot;되/VV&quot;, &quot;하/XSA&quot;, &quot;들/XSN&quot;, &quot;되/XSA&quot;, &quot;되/XSV&quot;, &quot;하/XSV&quot;, &quot;이/VCP&quot;, &quot;이/VV&quot;, &quot;적/XSN&quot;)
+  stop_words_pos &lt;- c(&quot;이/VCP&quot;, &quot;것/NNB&quot;, &quot;곳/NNG&quot;, &quot;곳/NNB&quot;, &quot;하/VX&quot;, &quot;하/VV&quot;, &quot;수/NNB&quot;, &quot;되/VV&quot;, 
+                      &quot;하/XSA&quot;, &quot;들/XSN&quot;, &quot;되/XSA&quot;, &quot;되/XSV&quot;, &quot;하/XSV&quot;, &quot;이/VCP&quot;, &quot;이/VV&quot;, &quot;적/XSN&quot;)
   
   # 정규표현식을 사용해 조사, 어미, 구두점, 불용어를 정확하게 제거하기.
   filtered_tokens &lt;- tagged_tokens %&gt;%
@@ -2429,8 +2430,8 @@ use_condaenv(&quot;my_env&quot;) # 새 세션마다 설정.</code></pre>
 
 # 불용어 목록 정의 (&quot;형태소/품사태그&quot; 형식)
 # 형태소/품사태그([EX] &quot;하/XSA&quot;) 형태로 불용어를 정의하여 정확도 높임.
-stop_words_pos &lt;- c(&quot;이/VCP&quot;, &quot;것/NNB&quot;, &quot;곳/NNG&quot;, &quot;곳/NNB&quot;, &quot;하/VX&quot;, &quot;하/VV&quot;, &quot;수/NNB&quot;, &quot;되/VV&quot;, &quot;하/XSA&quot;, &quot;들/XSN&quot;,
-                    &quot;되/XSA&quot;, &quot;되/XSV&quot;, &quot;하/XSV&quot;, &quot;이/VCP&quot;, &quot;이/VV&quot;, &quot;적/XSN&quot;) # 영화 리뷰이므로 &quot;영화&quot;라는 명사를 불용어 목록에 포함시킬 수도 있음.
+stop_words_pos &lt;- c(&quot;이/VCP&quot;, &quot;것/NNB&quot;, &quot;곳/NNG&quot;, &quot;곳/NNB&quot;, &quot;하/VX&quot;, &quot;하/VV&quot;, &quot;수/NNB&quot;, &quot;되/VV&quot;, 
+                    &quot;하/XSA&quot;, &quot;들/XSN&quot;, &quot;되/XSA&quot;, &quot;되/XSV&quot;, &quot;하/XSV&quot;, &quot;이/VCP&quot;, &quot;이/VV&quot;, &quot;적/XSN&quot;) # 영화 리뷰이므로 &quot;영화&quot;라는 명사를 불용어 목록에 포함시킬 수도 있음.
 
 # 대용량 말뭉치
 movie_ratings_train_1000</code></pre>
