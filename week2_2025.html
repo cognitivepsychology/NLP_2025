@@ -2263,7 +2263,7 @@ j1 &lt;- data.frame(json.list.2[[1]][[3]]$metadata$speaker) %&gt;% # 메타데�
 j2 &lt;- data.frame(json.list.2[[1]][[3]]$utterance) %&gt;% # document 리스트의 utterance(실제 대화) 섹션.
   as_tibble() 
 
-# 5개 JSON 파일에 대해 세 번째 리스트의 utterance만 티블 형식으로 추출하도록 for 구문 작성.
+# 5개 JSON 파일에 대해 세 번째 리스트의 utterance와 speaker 정보만 티블 형식으로 추출하도록 for 구문 작성.
 json_text &lt;- list()
 json_metadata &lt;- list()
 for(i in seq_along(json.list.2)){
