@@ -4102,7 +4102,7 @@ sjml_sample_step1</code></pre>
 ## # ℹ 82 more rows</code></pre>
 </div>
 <div id="단계-2-문장별로-감성점수-합산하기" class="section level3">
-<h3>단계 2: 문장별로 감성점수 합산하기</h3>
+<h3>2) 단계 2: 문장별로 감성점수 합산하기</h3>
 <pre class="r"><code>sjml_sample_step2 &lt;- sjml_sample_step1 %&gt;%
   ungroup() %&gt;% # 그루핑 풀어주기.
   # 그루핑을 안 풀어주면 그루핑의 기준이 된 title 칼럼과 unnest_tokens 함수의 결과로 만들어지는 word 칼럼 단 두 개만 달랑 남게 됨!
@@ -4130,7 +4130,7 @@ sjml_sample_step2 </code></pre>
 ## # ℹ 81 more rows</code></pre>
 </div>
 <div id="단계-3-감성점수의-변화를-꺾은선-그래프로-표현하기" class="section level3">
-<h3>단계 3: 감성점수의 변화를 꺾은선 그래프로 표현하기</h3>
+<h3>3) 단계 3: 감성점수의 변화를 꺾은선 그래프로 표현하기</h3>
 <pre class="r"><code>sjml_sample.knu.plot &lt;- sjml_sample_step2 %&gt;%
   ggplot(aes(x = sentence_id, y = sentiment_score, group = title)) + # x축은 문장번호(sentence_id), y축은 감정점수(sentiment_score), group은 텍스트 제목(title)이 될 예정.
   geom_line(color = &quot;steelblue&quot;, linewidth = 1.5) + # 선 그래프의 형식으로 제시하라! 선의 색상은 파란색, 선의 굵기는 1.8로!
