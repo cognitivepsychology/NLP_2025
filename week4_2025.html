@@ -4044,10 +4044,10 @@ library(tidytext)
 data(sentiment_dic) # KNU 감성사전 불러오기.
 
 sjml_sample_step1 &lt;- sjml_result %&gt;%
-  filter(title %in% c(&quot;일하기싫다&quot;, &quot;나에게 쓰는 편지 &quot;, &quot;아내의 생일상&quot;, &quot;졸업&quot;)) %&gt;% # 300개 일기/수필 중에서 감정의 기복이 비교적 심한 텍스트 4개 추출하기.  )
+  filter(title %in% c(&quot;일하기싫다&quot;, &quot;나에게 쓰는 편지 &quot;, &quot;아내의 생일상&quot;, &quot;졸업&quot;)) %&gt;% # 300개 일기/수필 중에서 감정의 기복이 비교적 심한 텍스트 4개 추출하기.
   unnest_tokens(sentence, text, token = &quot;sentences&quot;) %&gt;% # unnest_tokens() 함수를 사용하여 text 칼럼의 텍스트를 문장 단위로 토큰화하기.
   group_by(title) %&gt;% # 텍스트 제목을 기준으로 행들을 그루핑해주기.
-  mutate(sentence_id = row_number()) # sentence_id(문장이 제시된 순서대로 번호가 매겨질 것)라는 칼럼을 만들어 개별 텍스트 당 행 번호 넣기.
+  mutate(sentence_id = row_number()) # sentence_id(문장이 제시된 순서대로 번호가 매겨질 것)라는 칼럼을 만들어 개별 텍스트당 행 번호 넣기.
 sjml_sample_step1</code></pre>
 <pre><code>## # A tibble: 92 × 9
 ## # Groups:   title [4]
@@ -4110,7 +4110,7 @@ sjml_sample_step1</code></pre>
   unnest_tokens(word, sentence, token = &quot;words&quot;) %&gt;% 
   left_join(sentiment_dic, by = &quot;word&quot;) %&gt;% # 지금까지 만들어진 sjml 말뭉치 티블과 sentiment_dic(KNU 감성사전)을 word 칼럼 기준으로 병합하기.
   group_by(title, sentence_id) %&gt;% # title과 sentence_id를 기준으로 행들을 그루핑해주기. 감성점수는 문장 단위로 계산되지만, 그 문장이 어느 텍스트에 속해 있는지도 알아야 텍스트별 감정곡선을 그릴 수 있기 때문!
-  # summarise 함수를 사용하여 텍스트에 대한 주요 정보 요약하기: sentiment_score 계산하기. score 점수를 모두 합쳐라! 단, NA 행은 제외.
+  # summarise() 함수를 사용하여 텍스트에 대한 주요 정보 요약하기: sentiment_score 계산하기. 텍스트별로 각 문장의 감성점수를 모두 합쳐라! 단, NA 행은 제외.
   summarise(sentiment_score = sum(polarity, na.rm = TRUE)) 
 sjml_sample_step2 </code></pre>
 <pre><code>## # A tibble: 91 × 3
