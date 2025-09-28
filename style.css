@@ -47,19 +47,6 @@ body{
 blockquote{
   font-size: 12pt;
 }
-.co{
-  color: #8FD197 !important; /* 원하는 주석 색상 (예: 회색) */
-  font-family: '나눔고딕'; /* 원하는 서체 */
-  font-style: normal !important; /* 기울임꼴 적용 (선택 사항) */
-  font-weight: normal !important; /* 굵기 조정 (선택 사항) */
-}
-/* Pandoc의 기본 주석 토큰 클래스 */
-.CommentTok {
-  color: #8FD197 !important;
-  font-family: '나눔고딕'; /* 원하는 서체 */  
-  font-style: normal !important; 
-  font-weight: normal; 
-}
 .MathJax_Display{
     text-align: center;
     margin: 1em 0em;
@@ -72,6 +59,42 @@ blockquote{
     font-size:  90%;    
 }
 
+/* 전체 코드 블록 */
+.hljs {
+  color: #212121;               /* 거의 검정 */
+  font-weight: 600;             /* 기본 두께 강화 */
+  font-size: 1.1em;             /* 강의 화면용 크게 */
+  font-family: 'Nanum Gothic';
+}
 
- 
+/* 키워드 (if, for, function 등) */
+.hljs-keyword {
+  color: #0d47a1;               /* 짙은 파랑 */
+  font-weight: 700;             /* 기본보다 조금 더 강조 */
+}
 
+/* 함수 이름 */
+.hljs-title,
+.hljs-function {
+  color: #e64a19;               /* 진한 주황 */
+  font-weight: 700;
+}
+
+/* 문자열 */
+.hljs-string {
+  color: #7b1fa2;               /* 선명한 보라 */
+  font-weight: 700;
+}
+
+/* 숫자 */
+.hljs-number {
+  color: #6a1b9a;               /* 보라 계열 */
+  font-weight: 700;
+}
+
+/* 주석 */
+.hljs-comment {
+  color: #2e7d32;               /* 진한 녹색 */
+  font-style: normal;
+  font-weight: 700;
+}
