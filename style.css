@@ -47,6 +47,12 @@ body{
 blockquote{
   font-size: 12pt;
 }
+.co{
+  color: #8FD197; /* 원하는 주석 색상 (예: 회색) */
+  font-family: '나눔고딕'; /* 원하는 서체 */
+  font-style: normal; /* 기울임꼴 적용 (선택 사항) */
+  font-weight: normal; /* 굵기 조정 (선택 사항) */
+}
 .MathJax_Display{
     text-align: center;
     margin: 1em 0em;
