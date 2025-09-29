@@ -3257,7 +3257,7 @@ article_tf_idf %&gt;%
 <li><strong>ggplot2</strong>를 사용하여 TF-IDF 분석 결과 시각화하기</li>
 </ul>
 <pre class="r"><code>article_tf_idf %&gt;%
-    ggplot(aes(x = reorder_within(word, tf_idf, actual_label), y = tf_idf, fill = actual_label)) + # x축은 word, y축은 tf-idf, 색상은 title. x축은 actual_label별로 단어들이 TF-IDF 내림차순으로 배열되도록 하기.
+    ggplot(aes(x = reorder_within(word, tf_idf, actual_label), y = tf_idf, fill = actual_label)) + # x축은 word, y축은 tf-idf, 색상은 actual_label. x축은 actual_label별로 단어들이 TF-IDF 내림차순으로 배열되도록 하기.
     geom_col(alpha = 0.8, show.legend = FALSE) + # 바의 색상 조정. 범례는 제거.
     facet_wrap(~ actual_label, scales = &quot;free&quot;, ncol=1) + # 학문분야 기준으로 다면출력. 일렬로 제시.
     scale_x_reordered() + # x축은 reorder된 상태 유지. 
