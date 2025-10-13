@@ -2862,7 +2862,7 @@ stop_words</code></pre>
 담당자가 수업자료 레포지토리에 올려두었음.</li>
 </ul>
 <pre class="r"><code># 불용어 목록 저장 경로 생성하기.
-dir.create(&quot;texts/stop_words&quot;) # 반드시 프로젝트 파일을 열어두고 그곳에서 R 스크립트를 실행해야 함!
+dir.create(&quot;texts/stop_words&quot; recursive = TRUE) # 반드시 프로젝트 파일을 열어두고 그곳에서 R 스크립트를 실행해야 함! 만약 상위 폴더인 texts 폴더가 없다면 recursive = TRUE로 설정해야 함.
 stop_words.path &lt;- &quot;texts/stop_words/korean_stop_word_list.xlsx&quot;
 stop_words_url &lt;- &quot;https://github.com/cognitivepsychology/NLP_2025/raw/main/%EA%B8%B8%ED%98%B8%EC%97%B0_%EB%85%B8%EC%84%B1%ED%99%94%26%EA%B9%80%EC%A0%95%20%ED%86%B5%ED%95%A9%20%EB%B6%88%EC%9A%A9%EC%96%B4%20%EB%AA%A9%EB%A1%9D.xlsx&quot;
 
