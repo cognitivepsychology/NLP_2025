@@ -11,7 +11,7 @@
 
 
 
-<title>자연언어처리 7주차_텍스트 마이닝을 사용한 자연언어처리 #3: 토픽 모델링 및 TF-IDF</title>
+<title>자연언어처리 8주차_텍스트 마이닝을 사용한 자연언어처리 #3: 토픽 모델링 및 TF-IDF</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1572,10 +1572,10 @@ font-size: 0.95em;
 
 
 
-<h1 class="title toc-ignore">자연언어처리 7주차_텍스트 마이닝을 사용한
+<h1 class="title toc-ignore">자연언어처리 8주차_텍스트 마이닝을 사용한
 자연언어처리 #3: 토픽 모델링 및 TF-IDF</h1>
 <h3 class="subtitle">고려대학교 일반대학원 심리학과</h3>
-<h4 class="date">2025년 10월 13일 월요일 4-5교시</h4>
+<h4 class="date">2025년 10월 20일 월요일 4-5교시</h4>
 
 </div>
 
@@ -2271,7 +2271,13 @@ topfeatures(dfm_obj)</code></pre>
 <ul>
 <li><strong>tidytext</strong>패키지를 활용하여 DTM 객체 생성하기</li>
 </ul>
-<pre class="r"><code>load(&quot;article_filtered.rda&quot;) # article_filtered 객체 로드하기.
+<pre class="r"><code>download.file(
+  url = &quot;https://raw.githubusercontent.com/cognitivepsychology/NLP_2025/main/article_filtered.rda&quot;,
+  destfile = &quot;article_filtered.rda&quot;,
+  mode = &quot;wb&quot;  # 바이너리 파일이므로 반드시 &quot;wb&quot;로 설정하기.
+)
+
+load(&quot;article_filtered.rda&quot;) # article_filtered 객체 로드하기.
 
 # cast_dtm() 함수로 논문초록 DTM 객체 생성하기.
 article_dtm_tidy &lt;- article_filtered %&gt;%
