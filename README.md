@@ -15,6 +15,6 @@
 
 * **[week8_2025.html](http://cognitivepsychology.github.io/NLP_2025/week8_2025.html):** 8주차 수업자료: 텍스트 마이닝을 사용한 자연언어처리 #3: 토픽 모델링 및 TF-IDF. 해당 자료를 열람하려면 링크를 클릭할 것. 
 
-## 3. 8주차 수업자료: 텍스트 마이닝을 사용한 자연언어처리 #3: 토픽 모델링 및 TF-IDF
+## 3. 9주차 수업자료: 기계학습을 사용한 자연언어처리 #1: 지도학습(Naive Bayse, SVM)
 
 * **[week9_2025.html](http://cognitivepsychology.github.io/NLP_2025/week9_2025.html):** 9주차 수업자료: 기계학습을 사용한 자연언어처리 #1: 지도학습(Naive Bayse, SVM). 해당 자료를 열람하려면 링크를 클릭할 것.
