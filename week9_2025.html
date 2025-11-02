@@ -3249,7 +3249,12 @@ save(nb_model, file=&quot;nb_model.rda&quot;)</code></pre>
 </div>
 <div id="모델-예측-및-성능-평가" class="section level3">
 <h3>3) 모델 예측 및 성능 평가</h3>
-<pre class="r"><code># 나이브 베이즈 모델링 결과 로딩
+<pre class="r"><code>download.file(
+  url = &quot;https://raw.githubusercontent.com/cognitivepsychology/NLP_2025/main/nb_model.rda&quot;,
+  destfile = &quot;nb_model.rda&quot;,
+  mode = &quot;wb&quot;  # 바이너리 파일이므로 반드시 &quot;wb&quot;로 설정하기.
+)
+# 나이브 베이즈 모델링 결과 로딩
 load(&quot;nb_model.rda&quot;)
 
 # 테스트 데이터에 대한 예측 수행 
@@ -3507,7 +3512,13 @@ save(svm_model, file=&quot;svm_model.rda&quot;)</code></pre>
 </div>
 <div id="모델-예측-및-성능-평가-1" class="section level3">
 <h3>2) 모델 예측 및 성능 평가</h3>
-<pre class="r"><code># 서포트 벡터 머신 모델링 결과 로딩
+<pre class="r"><code>download.file(
+  url = &quot;https://raw.githubusercontent.com/cognitivepsychology/NLP_2025/main/svm_model.rda&quot;,
+  destfile = &quot;svm_model.rda&quot;,
+  mode = &quot;wb&quot;  # 바이너리 파일이므로 반드시 &quot;wb&quot;로 설정하기.
+)
+
+# 서포트 벡터 머신 모델링 결과 로딩
 load(&quot;svm_model.rda&quot;)
 
 # 테스트 데이터에 대한 예측 수행 
