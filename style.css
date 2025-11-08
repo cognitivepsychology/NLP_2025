@@ -98,3 +98,21 @@ blockquote{
   font-style: normal;
   font-weight: 700;
 }
+
+/* 부드러운 톤 권장: 붙여넣기용 (맨 아래에 추가) */
+html body code:not([class*="language-"]):not(.hljs):not(.sourceCode),
+html body .rmd-content code:not([class*="language-"]):not(.hljs):not(.sourceCode),
+html body article code:not([class*="language-"]):not(.hljs):not(.sourceCode) {
+  font-family: inherit !important;
+  font-size: inherit !important;
+  line-height: inherit !important;
+  color: #1f3a93 !important;            /* 진하지만 부드러운 네이비 */
+  background-color: #f5f7ff !important; /* 아주 연한 블루 계열 배경 */
+  font-weight: 600 !important;          /* 너무 두껍지 않게 */
+  padding: 0.06em 0.28em !important;    /* 약간 줄임 */
+  border-radius: 5px !important;
+  border: 1px solid #c7d2f0 !important; /* 얇은 테두리로 구분 */
+  display: inline-block !important;
+  vertical-align: baseline !important;
+  white-space: nowrap !important;
+}
