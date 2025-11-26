@@ -29,4 +29,4 @@
 
 ## 7. 13주차 수업자료: 딥러닝을 사용한 자연언어처리 #2: RNN과 LSTM을 사용한 문장 생성
 
-* **[week12_2025.html](http://cognitivepsychology.github.io/NLP_2025/week12_2025.html):** 13주차 수업자료: 딥러닝을 사용한 자연언어처리 #2: RNN과 LSTM을 사용한 문장 생성. 해당 자료를 열람하려면 링크를 클릭할 것.
+* **[week13_2025.html](http://cognitivepsychology.github.io/NLP_2025/week13_2025.html):** 13주차 수업자료: 딥러닝을 사용한 자연언어처리 #2: RNN과 LSTM을 사용한 문장 생성. 해당 자료를 열람하려면 링크를 클릭할 것.
