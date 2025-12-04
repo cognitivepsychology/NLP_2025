@@ -1,4 +1,5 @@
-@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css)
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&display=swap');
 
 /* Whole document: */
 body{
@@ -61,17 +62,20 @@ blockquote{
 
 /* 전체 코드 블록 */
 .hljs {
-  color: #212121;               /* 거의 검정 */
-  font-weight: 600;             /* 기본 두께 강화 */
-  font-size: 1.1em;             /* 강의 화면용 크게 */
-  font-family: 'NanumGothic';
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 800;              /* 굵기 최상 */
+  font-size: 1.12em;             /* 시각적 크기 보정 */
+  line-height: 1.6;              /* 행간 넉넉하게 */
+  letter-spacing: -0.012em;      /* 자간 살짝 줄여서 구조적 느낌 강화 */
+  color: #0f0f0f;                /* 너무 검지 않은 진한 회색 → 번짐 방지 */
+  font-feature-settings: "liga" 1, "calt" 1; /* ligature 활성화 → <- → ← */
 }
 
 /* 키워드 (if, for, function 등) */
 .hljs-keyword {
   color: #0d47a1;               /* 짙은 파랑 */
   font-weight: 700;             /* 기본보다 조금 더 강조 */
-  font-family: 'NanumGothic';
+  font-family: '나눔고딕';
 }
 
 /* 함수 이름 */
@@ -79,21 +83,21 @@ blockquote{
 .hljs-function {
   color: #e64a19;               /* 진한 주황 */
   font-weight: 700;
-  font-family: 'NanumGothic';
+  font-family: '나눔고딕';
 }
 
 /* 문자열 */
 .hljs-string {
   color: #7b1fa2;               /* 선명한 보라 */
   font-weight: 700;
-  font-family: 'NanumGothic';
+  font-family: '나눔고딕';
 }
 
 /* 숫자 */
 .hljs-number {
   color: #6a1b9a;               /* 보라 계열 */
   font-weight: 700;
-  font-family: 'NanumGothic';
+  font-family: '나눔고딕';
 }
 
 /* 주석 */
