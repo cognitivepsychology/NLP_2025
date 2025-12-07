@@ -3376,6 +3376,9 @@ load(&quot;embedding_matrix_test.rda&quot;)
 train_data_df &lt;-  as.data.frame(embedding_matrix_train) %&gt;%
   bind_cols(label = df_train$label)
 
+test_data_df &lt;-  as.data.frame(embedding_matrix_test) %&gt;%
+  bind_cols(label = df_test$label)
+
 # ==============================================================================
 # 1. 라벨 이름 변경(개명신청)
 # ==============================================================================
