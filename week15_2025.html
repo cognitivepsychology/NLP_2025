@@ -2641,7 +2641,7 @@ read_mental_health_json &lt;- function(filepath) {
     
   }, error = function(e) {
     # 에러 발생 시 메시지 출력 및 NULL 반환
-    message(paste(&quot;Error reading file:&quot;, filepath))
+    message(str_c(&quot;Error reading file:&quot;, filepath))
     return(NULL)
   })
 }
@@ -3387,7 +3387,7 @@ train_data_df &lt;-  as.data.frame(embedding_matrix_train) %&gt;%
 levels(train_data_df$label) &lt;- str_c(&quot;Class&quot;, levels(train_data_df$label))
 
 # 테스트 데이터 라벨 변경 (똑같이 맞춰줘야 함!)
-levels(test_data_df$label) &lt;- paste0(&quot;Class&quot;, levels(test_data_df$label))
+levels(test_data_df$label) &lt;- str_c(&quot;Class&quot;, levels(test_data_df$label))
 
 # (확인) &quot;Class0&quot;, &quot;Class1&quot;... 이렇게 나오는지 꼭 확인하기!
 levels(train_data_df$label)
