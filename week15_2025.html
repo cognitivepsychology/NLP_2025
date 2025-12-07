@@ -5156,8 +5156,8 @@ interpretable model-agnostic explanations)</strong> 에 대해, 우리의 BERT
 결정적인 역할을 한 단어임.</li>
 <li>색상(direction)
 <ul>
-<li>초록색/파란색(supports): 이 단어가 있어서 해당 진단([EX] 우울)
-확률이 올라갔음. <span class="math inline">\(\Rightarrow\)</span> 지지
+<li>파란색(supports): 이 단어가 있어서 해당 진단([EX] 우울) 확률이
+올라갔음. <span class="math inline">\(\Rightarrow\)</span> 지지
 증거.</li>
 <li>빨간색(contradicts): 이 단어 때문에 해당 진단 확률([EX] 우울)이
 내려갔음(오히려 방해됨).” <span class="math inline">\(\Rightarrow\)</span> 반박 증거.</li>
@@ -5567,7 +5567,7 @@ LIME이 문장을 1,000번 변형시키면, SBERT도 1,000번 돌아가야 하�
 <strong>불안</strong> 이라고 적혀 있음. <span class="math inline">\(\Rightarrow\)</span> 모델이 예측한 결과.</li>
 <li>막대 색
 <ul>
-<li>초록색(supports): 이 단어 때문에 해당 라벨([EX] 중독)일 확률이
+<li>파란색(supports): 이 단어 때문에 해당 라벨([EX] 중독)일 확률이
 높아짐. <span class="math inline">\(\Rightarrow\)</span> 긍정적
 증거.</li>
 <li>빨간색(contradicts): 이 단어는 해당 라벨이 아닐 가능성을 높임. <span class="math inline">\(\Rightarrow\)</span> 부정적 증거.</li>
@@ -5575,7 +5575,7 @@ LIME이 문장을 1,000번 변형시키면, SBERT도 1,000번 돌아가야 하�
 <li>예시 해석
 <ul>
 <li>예시: 첫 번째 문장(“술을 너무 많이…”)에서 <strong>술</strong>,
-<strong>손이</strong>, <strong>떨려요</strong>가 <strong>초록색
+<strong>손이</strong>, <strong>떨려요</strong>가 <strong>파란색
 막대</strong>로 길게 나왔다면?</li>
 <li>해석: 모델은 이 문장을 ’중독’으로 분류했고, 그 결정적인 근거는
 ’술’과 ’손 떨림’이라는 단어였다는 뜻임.</li>
