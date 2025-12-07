@@ -4,7 +4,7 @@
 /* Whole document: */
 body{
   font-family: '나눔고딕';
-  font-size: 12pt;
+  font-size: 12pt;   
 }
 
 /* Headers */
@@ -62,7 +62,7 @@ blockquote{
 
 /* 전체 코드 블록 */
 .hljs {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'JetBrains Mono', monospace !important;
   font-weight: 800;              /* 굵기 최상 */
   font-size: 1.12em;             /* 시각적 크기 보정 */
   line-height: 1.6;              /* 행간 넉넉하게 */
@@ -75,7 +75,7 @@ blockquote{
 .hljs-keyword {
   color: #0d47a1;               /* 짙은 파랑 */
   font-weight: 700;             /* 기본보다 조금 더 강조 */
-  font-family: '나눔고딕';
+  font-family: 'JetBrains Mono', monospace !important; 
 }
 
 /* 함수 이름 */
@@ -83,30 +83,31 @@ blockquote{
 .hljs-function {
   color: #e64a19;               /* 진한 주황 */
   font-weight: 700;
-  font-family: '나눔고딕';
+  font-family: 'JetBrains Mono', monospace !important;
 }
 
 /* 문자열 */
 .hljs-string {
   color: #7b1fa2;               /* 선명한 보라 */
   font-weight: 700;
-  font-family: '나눔고딕';
+  font-family: 'JetBrains Mono', '나눔고딕', monospace !important;
 }
 
 /* 숫자 */
 .hljs-number {
   color: #6a1b9a;               /* 보라 계열 */
   font-weight: 700;
-  font-family: '나눔고딕';
+  font-family: 'JetBrains Mono', monospace !important;
 }
 
 /* 주석 */
 .hljs-comment {
   color: #2e7d32;               /* 진한 녹색 */
-  font-style: normal;
+  font-style: normal; 
   font-size: 1.03em;  
-  font-weight: 700;
-  font-family: 'NanumGothic';
+  font-weight: 800; 
+  font-family: '나눔고딕';
+  
 }
 
 /* 부드러운 톤 권장: 붙여넣기용 (맨 아래에 추가) */
@@ -126,3 +127,4 @@ html body article code:not([class*="language-"]):not(.hljs):not(.sourceCode) {
   vertical-align: baseline !important;
   white-space: nowrap !important;
 }
+
