@@ -3380,7 +3380,7 @@ test_data_df &lt;-  as.data.frame(embedding_matrix_test) %&gt;%
   bind_cols(label = df_test$label)
 
 # ==============================================================================
-# 1. 라벨 이름 변경(개명신청)
+# 1. 라벨 이름 변경(개명신청: 만약 라벨 이름이 숫자가 아니라면 건너뛰기!)
 # ==============================================================================
 # 현재: &quot;0&quot;, &quot;1&quot;, &quot;2&quot;, &quot;3&quot;
 # 목표: &quot;Class0&quot;, &quot;Class1&quot;, &quot;Class2&quot;, &quot;Class3&quot; (또는 L0, L1...)
