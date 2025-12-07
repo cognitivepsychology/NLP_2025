@@ -2535,7 +2535,6 @@ processing)이 GPU를 단순한 게임 장비에서 인공지능 시대의 핵�
 <pre class="r"><code># -----------------------------------------------------------------------------
 # 1. R 필수 패키지 로드
 # -----------------------------------------------------------------------------
-Sys.setenv(TF_USE_LEGACY_KERAS = &quot;1&quot;) # Keras 3가 있어도 무시하고 &#39;호환 모드&#39;로 작동하라는 명령
 library(tidyverse)
 library(jsonlite)
 library(reticulate)
@@ -2563,11 +2562,8 @@ use_condaenv(&quot;my_env_310&quot;, required = TRUE) # 여러분이 keras3와 t
 # pip install transformers torch numpy pandas peft accelerate
 
 # R에서 직접 설치를 시도할 경우 아래 명령어를 사용.
-# py_install(c(&quot;transformers&quot;, &quot;torch&quot;, &quot;numpy&quot;, &quot;pandas&quot;, &quot;peft&quot;, &quot;accelerate&quot;, &quot;sentence_transformers&quot;, &quot;datasets&quot;), pip = TRUE)
+# py_install(c(&quot;transformers&quot;, &quot;torch&quot;, &quot;numpy&quot;, &quot;pandas&quot;, &quot;peft&quot;, &quot;accelerate&quot;, &quot;sentence_transformers&quot;), pip = TRUE)
 
-# keras3가 설치된 가상환경에서 이전 버전 keras를 요구하는 파이썬 라이브러리들이 있으면 오류가 발생할 수 있음. 
-# 만약에 transformers 라이브 사용 도중 오류가 발생할 경우에 한해서 돌아와서 tf-keras를 해당 가상환경에서 설치할 것
-# py_install(&quot;tf-keras&quot;, envname = &quot;my_env_310&quot;, pip = TRUE) 
 # -----------------------------------------------------------------------------
 # 4. 파이썬 라이브러리를 R 환경으로 불러오기(import)
 # -----------------------------------------------------------------------------
@@ -2645,7 +2641,7 @@ read_mental_health_json &lt;- function(filepath) {
     
   }, error = function(e) {
     # 에러 발생 시 메시지 출력 및 NULL 반환
-    message(str_c(&quot;Error reading file:&quot;, filepath))
+    message(paste(&quot;Error reading file:&quot;, filepath))
     return(NULL)
   })
 }
@@ -3380,11 +3376,8 @@ load(&quot;embedding_matrix_test.rda&quot;)
 train_data_df &lt;-  as.data.frame(embedding_matrix_train) %&gt;%
   bind_cols(label = df_train$label)
 
-test_data_df &lt;-  as.data.frame(embedding_matrix_test) %&gt;%
-  bind_cols(label = df_test$label)
-
 # ==============================================================================
-# 1. 라벨 이름 변경(개명신청: 만약 라벨 이름이 숫자가 아니라면 건너뛰기!)
+# 1. 라벨 이름 변경(개명신청)
 # ==============================================================================
 # 현재: &quot;0&quot;, &quot;1&quot;, &quot;2&quot;, &quot;3&quot;
 # 목표: &quot;Class0&quot;, &quot;Class1&quot;, &quot;Class2&quot;, &quot;Class3&quot; (또는 L0, L1...)
@@ -4463,7 +4456,7 @@ output_dir &lt;- &quot;lora_finetuned_model&quot;
 dir.create(&quot;lora_finetuned_model&quot;, recursive = T)
 
 # -----------------------------------------------------------------------------
-# 1. 학습 파라미터 설정 (TrainingArguments)
+# 1. 학습 파라미터 설정(TrainingArguments)
 # -----------------------------------------------------------------------------
 # transformers$TrainingArguments: 학습에 필요한 모든 세부 설정을 담는 객체임.
 training_args &lt;- transformers$TrainingArguments(
@@ -4549,12 +4542,12 @@ unzip(lora_file, exdir = &quot;lora_finetuned_model&quot;)
 # ------------------------------------------------------------------------------
 # 2. 경로설정(아까 저장했던 그 폴더)
 # ------------------------------------------------------------------------------
-model_path &lt;- output_dir
+model_path &lt;- &quot;lora_finetuned_model&quot;
 
 # ------------------------------------------------------------------------------
 # 3. 토크나이저 로드(단어장 불러오기)
 # ------------------------------------------------------------------------------
-loaded_tokenizer &lt;- transformers$AutoTokenizer$from_pretrained(model_path)
+tokenizer_clf &lt;- transformers$AutoTokenizer$from_pretrained(model_path)
 
 # ------------------------------------------------------------------------------
 # 4. [중요] 모델 로드(2단계 합체 과정)
@@ -4569,11 +4562,71 @@ base_model &lt;- transformers$AutoModelForSequenceClassification$from_pretrained
 
 # 단계 B: 우리가 저장한 &#39;LoRA 가중치&#39;를 원본에 장착함
 # PeftModel$from_pretrained(원본 모델, 저장된 경로)
-loaded_model &lt;- peft$PeftModel$from_pretrained(base_model, model_path)
+model_lora &lt;- peft$PeftModel$from_pretrained(base_model, model_path)
+
+## Plan-B: 단계 B에서 오류가 발생하는 경우 ##
+
+# 깡통 모델을 따로 부르지 않고, &#39;완성품&#39;을 한 번에 부르기.
+model_lora &lt;- peft$AutoPeftModelForSequenceClassification$from_pretrained(
+  model_path,
+  num_labels = 4L  # 라벨 개수 명시
+)
+
+# 학습용 데이터셋 URL
+train_dataset_url &lt;- &quot;https://raw.githubusercontent.com/cognitivepsychology/NLP_2025/main/data/train_dataset.rda&quot;  
+# 로컬에 저장할 파일명  
+train_dataset_file &lt;- &quot;train_dataset.rda&quot;
+# 학습용 데이터셋 파일 다운로드하기
+download.file(train_dataset_url, train_dataset_file) 
+
+# 학습용 데이터셋 URL
+test_dataset_url &lt;- &quot;https://raw.githubusercontent.com/cognitivepsychology/NLP_2025/main/data/test_dataset.rda&quot;  
+# 로컬에 저장할 파일명  
+test_dataset_file &lt;- &quot;test_dataset.rda&quot;
+# 학습용 데이터셋 파일 다운로드하기
+download.file(test_dataset_url, test_dataset_file)
+
+# 학습용 &amp; 테스트용 데이터셋 로드하기
+load(&quot;train_dataset.rda&quot;)
+load(&quot;test_dataset.rda&quot;)
+
+# 학습 파라미터 설정
+training_args &lt;- transformers$TrainingArguments(
+  output_dir = output_dir, # 결과저장 경로
+  learning_rate = 2e-4, # 학습률: LoRA는 일반 미세조정(보통 2e-5)보다 약간 높게 잡는 것이 좋음.
+  
+  # --- 저용량 VRAM을 위한 핵심설정 ---
+  # per_device_train_batch_size: 한 번에 GPU에 올릴 실제 배치 크기임. VRAM이 작으면 이 값을 줄여야 함([EX] 4, 8).
+  per_device_train_batch_size = 4L,
+  # gradient_accumulation_steps: 그래디언트를 몇 번 모아서 가중치를 업데이트할지 설정함.
+  # 실제 학습효과는 (per_device_train_batch_size * gradient_accumulation_steps) 크기의 배치를 쓴 것과 같아짐.
+  # 여기서는 4 * 4 = 16의 배치 크기 효과를 냄. 작은 VRAM으로 큰 배치 학습효과를 내는 핵심기법임.
+  gradient_accumulation_steps = 4L,
+  # ----------------------------------
+  
+  num_train_epochs = 3L, # 전체 데이터를 몇 번 반복해서 학습할지 설정함(에포크 수).
+  weight_decay = 0.01, # 가중치 감쇠: 과적합을 막기 위한 규제(regularization) 파라미터임.
+  eval_strategy = &quot;epoch&quot;, # 평가 주기: 매 에포크가 끝날 때마다 테스트 데이터로 성능을 평가함.
+  save_strategy = &quot;epoch&quot;, # 저장 주기: 매 에포크가 끝날 때마다 모델 체크포인트를 저장함.
+  load_best_model_at_end = TRUE, # 학습종료 후 가장 성능이 좋았던 때의 모델을 자동으로 불러옴.
+  push_to_hub = FALSE, # Hugging Face Hub에 모델을 업로드하지 않음.
+  remove_unused_columns = FALSE, # 중요: R에서 만든 커스텀 데이터셋을 사용할 때 이 옵션을 FALSE로 해야 오류가 안 남.
+  # use_cpu: GPU 사용 여부를 결정함. GPU가 있으면 FALSE, 없으면 TRUE로 자동 설정함.
+  use_cpu = ifelse(torch$cuda$is_available(), FALSE, TRUE)
+) 
+
+# trainer 객체 생성
+trainer &lt;- transformers$Trainer(
+  model = model_lora, # 학습할 모델(LoRA가 적용된 모델)
+  args = training_args, # 위에서 정의한 학습 파라미터
+  train_dataset = train_dataset, # 학습용 데이터셋
+  eval_dataset = test_dataset, # 평가용 데이터셋
+  # data_collator: 배치 내의 문장 길이를 가장 긴 문장에 맞춰 동적으로 패딩해주는 역할을 함. 효율적인 학습을 위해 필요함.
+  data_collator = transformers$DataCollatorWithPadding(tokenizer = tokenizer_clf)
+)
 
 # (선택) 모델을 평가 모드(eval)로 전환(학습 안 할 거니까)
-loaded_model$eval() # 만약 에러 나면 생략 가능(PyTorch 객체일 때만 작동)
-
+model_lora$eval() # 만약 에러 나면 생략 가능(PyTorch 객체일 때만 작동)
 cat(&quot;모델 로딩 완료! 이제 예측을 시작할 수 있습니다.\n&quot;)</code></pre>
 </div>
 </div>
