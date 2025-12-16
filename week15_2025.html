@@ -4255,7 +4255,7 @@ training_args &lt;- transformers$TrainingArguments(
   learning_rate = 2e-4, # 지식습득 속도는 0.0002입니다.
   
   # 3. 평가 및 저장 규칙
-  evaluation_strategy = &quot;epoch&quot;, # 책 1번 다 볼 때마다 모의고사 치르세요.
+  eval_strategy = &quot;epoch&quot;, # 책 1번 다 볼 때마다 모의고사 치르세요.
   save_strategy = &quot;epoch&quot;, # 모의고사 치를 때마다 저장(세이브) 하세요.
   load_best_model_at_end = TRUE, # 다 끝나면 제일 잘 본 시험지 기준으로 모델을 되돌리세요.
   
@@ -4517,7 +4517,7 @@ training_args &lt;- transformers$TrainingArguments(
   
   num_train_epochs = 3L, # 전체 데이터를 몇 번 반복해서 학습할지 설정함(에포크 수).
   weight_decay = 0.01, # 가중치 감쇠: 과적합을 막기 위한 규제(regularization) 파라미터임.
-  evaluation_strategy = &quot;epoch&quot;, # 평가 주기: 매 에포크가 끝날 때마다 테스트 데이터로 성능을 평가함.
+  eval_strategy = &quot;epoch&quot;, # 평가 주기: 매 에포크가 끝날 때마다 테스트 데이터로 성능을 평가함.
   save_strategy = &quot;epoch&quot;, # 저장 주기: 매 에포크가 끝날 때마다 모델 체크포인트를 저장함.
   load_best_model_at_end = TRUE, # 학습종료 후 가장 성능이 좋았던 때의 모델을 자동으로 불러옴.
   push_to_hub = FALSE, # Hugging Face Hub에 모델을 업로드하지 않음.
